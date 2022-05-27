@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const FirstPage(title: 'FirstPage'),
+      home: const FirstPage(title: 'Home'),
     );
   }
 }
@@ -33,28 +33,28 @@ class FirstPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          RaisedButton(
-            child: Text('SecondPage'),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const SecondPage(title: 'SecondPage')));
-            },
-          ),
-          RaisedButton(
-            child: Text('ThirdPage'),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const ThirdPage(title: 'ThirdPage')));
-            },
-          ),
-        ],
-      ),
+            RaisedButton(
+              child: Text('Get Started'),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const SecondPage(title: 'Sign Up Page')));
+              },
+            ),
+            RaisedButton(
+              child: Text('Login'),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const ThirdPage(title: 'Sign In Page')));
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -75,9 +75,10 @@ class SecondPage extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const ThirdPage(title: 'ThirdPage')));
+                    builder: (context) =>
+                        const ThirdPage(title: 'Sign In Page')));
           },
-          child: const Text('ThirdPage'),
+          child: const Text('Go To Sign In Page'),
         ),
       ),
     );
@@ -100,9 +101,9 @@ class ThirdPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        const SecondPage(title: 'SecondPage')));
+                        const SecondPage(title: 'Sign Up Page')));
           },
-          child: const Text('Second Page'),
+          child: const Text('Go To Sign Up Page'),
         ),
       ),
     );
