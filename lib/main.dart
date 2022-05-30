@@ -91,21 +91,33 @@ class ThirdPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        const SecondPage(title: 'Sign Up Page')));
-          },
-          child: const Text('Go To Sign Up Page'),
+        appBar: AppBar(
+          title: Text(title),
         ),
-      ),
-    );
+        body: Column(children: [
+          TextField(
+              decoration: InputDecoration(
+            hintText: "Email",
+          )),
+          TextField(
+            decoration: InputDecoration(
+              hintText: "Password",
+            ),
+          ),
+          RaisedButton(
+            child: Text('Login'),
+            onPressed: null,
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const SecondPage(title: 'Sign Up Page')));
+            },
+            child: const Text("Don;t have an account?"),
+          ),
+        ]));
   }
 }
