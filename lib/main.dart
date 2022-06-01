@@ -94,30 +94,33 @@ class ThirdPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(title),
         ),
-        body: Column(children: [
-          TextField(
-              decoration: InputDecoration(
-            hintText: "Email",
-          )),
-          TextField(
-            decoration: InputDecoration(
-              hintText: "Password",
-            ),
-          ),
-          RaisedButton(
-            child: Text('Login'),
-            onPressed: null,
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const SecondPage(title: 'Sign Up Page')));
-            },
-            child: const Text("Don;t have an account?"),
-          ),
-        ]));
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextField(
+                  decoration: InputDecoration(
+                hintText: "Email",
+              )),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: "Password",
+                ),
+              ),
+              RaisedButton(
+                child: Text('Login'),
+                onPressed: null,
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const SecondPage(title: 'Sign Up Page')));
+                },
+                child: const Text("Don't have an account?"),
+              ),
+            ]));
   }
 }
