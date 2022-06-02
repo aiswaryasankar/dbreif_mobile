@@ -69,17 +69,34 @@ class SecondPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        const ThirdPage(title: 'Sign In Page')));
-          },
-          child: const Text('Go To Sign In Page'),
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          TextField(
+            decoration: InputDecoration(hintText: "Full Name"),
+          ),
+          TextField(
+            decoration: InputDecoration(hintText: "Email"),
+          ),
+          TextField(
+            decoration: InputDecoration(hintText: "Password"),
+          ),
+          TextField(
+            decoration: InputDecoration(hintText: "Confirm Password"),
+          ),
+          RaisedButton(onPressed: null, child: Text("Register")),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const ThirdPage(title: 'Sign In Page')));
+            },
+            child: const Text('Already have an account?'),
+          ),
+        ],
       ),
     );
   }
