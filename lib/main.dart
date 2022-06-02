@@ -26,9 +26,6 @@ class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -115,29 +112,45 @@ class ThirdPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextField(
-                  decoration: InputDecoration(
-                hintText: "Email",
-              )),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Password",
-                ),
-              ),
-              RaisedButton(
-                child: Text('Login'),
-                onPressed: null,
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const SecondPage(title: 'Sign Up Page')));
-                },
-                child: const Text("Don't have an account?"),
-              ),
+              Container(
+                  decoration: new BoxDecoration(color: Colors.grey),
+                  child: Column(children: [
+                    TextField(
+                        decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "Email",
+                    )),
+                    TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Password",
+                      ),
+                    ),
+                    ButtonTheme(
+                      minWidth: 270,
+                      height: 50.0,
+                      child: RaisedButton(
+                        color: Colors.orange[700],
+                        disabledColor: Colors.orange[700],
+                        textColor: Colors.white,
+                        disabledTextColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Text('Login'),
+                        onPressed: null,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const SecondPage(title: 'Sign Up Page')));
+                      },
+                      child: const Text("Don't have an account?"),
+                    ),
+                  ]))
             ]));
   }
 }
