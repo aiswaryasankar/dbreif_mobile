@@ -108,49 +108,54 @@ class ThirdPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(title),
         ),
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                  decoration: new BoxDecoration(color: Colors.grey),
-                  child: Column(children: [
-                    TextField(
-                        decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Email",
-                    )),
-                    TextField(
-                      decoration: InputDecoration(
+        body: Container(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                    width: 500,
+                    height: 176,
+                    margin: EdgeInsets.all(300),
+                    decoration: new BoxDecoration(color: Colors.grey),
+                    child: Column(children: [
+                      TextField(
+                          decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: "Password",
+                        hintText: "Email",
+                      )),
+                      TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Password",
+                        ),
                       ),
-                    ),
-                    ButtonTheme(
-                      minWidth: 270,
-                      height: 50.0,
-                      child: RaisedButton(
-                        color: Colors.orange[700],
-                        disabledColor: Colors.orange[700],
-                        textColor: Colors.white,
-                        disabledTextColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Text('Login'),
-                        onPressed: null,
+                      ButtonTheme(
+                        minWidth: 270,
+                        height: 50.0,
+                        child: RaisedButton(
+                          color: Colors.orange[700],
+                          disabledColor: Colors.orange[700],
+                          textColor: Colors.white,
+                          disabledTextColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Text('Login'),
+                          onPressed: null,
+                        ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const SecondPage(title: 'Sign Up Page')));
-                      },
-                      child: const Text("Don't have an account?"),
-                    ),
-                  ]))
-            ]));
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const SecondPage(title: 'Sign Up Page')));
+                        },
+                        child: const Text("Don't have an account?"),
+                      ),
+                    ]))
+              ]),
+        ));
   }
 }
