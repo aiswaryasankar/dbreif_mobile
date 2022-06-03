@@ -66,34 +66,58 @@ class SecondPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          TextField(
-            decoration: InputDecoration(hintText: "Full Name"),
-          ),
-          TextField(
-            decoration: InputDecoration(hintText: "Email"),
-          ),
-          TextField(
-            decoration: InputDecoration(hintText: "Password"),
-          ),
-          TextField(
-            decoration: InputDecoration(hintText: "Confirm Password"),
-          ),
-          RaisedButton(onPressed: null, child: Text("Register")),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          const ThirdPage(title: 'Sign In Page')));
-            },
-            child: const Text('Already have an account?'),
-          ),
-        ],
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 500,
+              margin: EdgeInsets.only(left: 300, top: 10),
+              decoration: new BoxDecoration(color: Colors.grey),
+              child: Column(
+                children: [
+                  TextField(
+                    decoration: InputDecoration(hintText: "Full Name"),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(hintText: "Email"),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(hintText: "Password"),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(hintText: "Confirm Password"),
+                  ),
+                  ButtonTheme(
+                    minWidth: 270,
+                    height: 50.0,
+                    child: RaisedButton(
+                      color: Colors.orange[700],
+                      disabledColor: Colors.orange[700],
+                      textColor: Colors.white,
+                      disabledTextColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Text('Register'),
+                      onPressed: null,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ThirdPage(title: 'Sign In Page')));
+                    },
+                    child: const Text('Already have an account?'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -115,8 +139,7 @@ class ThirdPage extends StatelessWidget {
               children: [
                 Container(
                     width: 500,
-                    height: 176,
-                    margin: EdgeInsets.all(300),
+                    margin: EdgeInsets.only(left: 380, top: 10),
                     decoration: new BoxDecoration(color: Colors.grey),
                     child: Column(children: [
                       TextField(
