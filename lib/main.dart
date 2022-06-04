@@ -72,8 +72,8 @@ class SecondPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              width: 500,
-              margin: EdgeInsets.only(left: 300, top: 10),
+              width: 250,
+              margin: EdgeInsets.only(left: 40, top: 10),
               decoration: new BoxDecoration(color: Colors.grey),
               child: Column(
                 children: [
@@ -138,8 +138,8 @@ class ThirdPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                    width: 500,
-                    margin: EdgeInsets.only(left: 380, top: 10),
+                    width: 250,
+                    margin: EdgeInsets.only(left: 40, top: 10),
                     decoration: new BoxDecoration(color: Colors.grey),
                     child: Column(children: [
                       TextField(
