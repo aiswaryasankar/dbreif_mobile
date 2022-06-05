@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -74,23 +75,66 @@ class SecondPage extends StatelessWidget {
             Container(
               width: 250,
               margin: EdgeInsets.only(left: 40, top: 10),
-              decoration: new BoxDecoration(color: Colors.grey),
+              decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: CupertinoColors.lightBackgroundGray),
               child: Column(
                 children: [
-                  TextField(
-                    decoration: InputDecoration(hintText: "Full Name"),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: "Full Name",
+                        filled: true,
+                        fillColor: Colors.grey,
+                      ),
+                    ),
                   ),
-                  TextField(
-                    decoration: InputDecoration(hintText: "Email"),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: "Email",
+                        filled: true,
+                        fillColor: Colors.grey,
+                      ),
+                    ),
                   ),
-                  TextField(
-                    decoration: InputDecoration(hintText: "Password"),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: "Password",
+                        filled: true,
+                        fillColor: Colors.grey,
+                      ),
+                    ),
                   ),
-                  TextField(
-                    decoration: InputDecoration(hintText: "Confirm Password"),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: "Confirm Passoword",
+                        filled: true,
+                        fillColor: Colors.grey,
+                      ),
+                    ),
                   ),
+                  SizedBox(height: 20),
                   ButtonTheme(
-                    minWidth: 270,
+                    minWidth: 200,
                     height: 50.0,
                     child: RaisedButton(
                       color: Colors.orange[700],
@@ -140,33 +184,54 @@ class ThirdPage extends StatelessWidget {
                 Container(
                     width: 250,
                     margin: EdgeInsets.only(left: 40, top: 10),
-                    decoration: new BoxDecoration(color: Colors.grey),
+                    decoration: new BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: CupertinoColors.lightBackgroundGray),
                     child: Column(children: [
-                      TextField(
-                          decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Email",
-                      )),
-                      TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Password",
-                        ),
-                      ),
-                      ButtonTheme(
-                        minWidth: 270,
-                        height: 50.0,
-                        child: RaisedButton(
-                          color: Colors.orange[700],
-                          disabledColor: Colors.orange[700],
-                          textColor: Colors.white,
-                          disabledTextColor: Colors.white,
-                          shape: RoundedRectangleBorder(
+                      SizedBox(height: 20),
+                      Container(
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        child: TextField(
+                            decoration: InputDecoration(
+                          border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          child: Text('Login'),
-                          onPressed: null,
+                          hintText: "Email",
+                          filled: true,
+                          fillColor: Colors.grey,
+                        )),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintText: "Password",
+                            filled: true,
+                            fillColor: Colors.grey,
+                          ),
                         ),
                       ),
+                      SizedBox(height: 20),
+                      Container(
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        child: ButtonTheme(
+                          minWidth: 270,
+                          height: 50.0,
+                          child: RaisedButton(
+                            color: Colors.orange[700],
+                            disabledColor: Colors.orange[700],
+                            textColor: Colors.white,
+                            disabledTextColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text('Login'),
+                            onPressed: null,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 15),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
