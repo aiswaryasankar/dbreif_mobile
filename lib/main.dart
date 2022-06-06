@@ -74,7 +74,7 @@ class SecondPage extends StatelessWidget {
           children: [
             Container(
               width: 250,
-              margin: EdgeInsets.only(left: 40, top: 10),
+              margin: EdgeInsets.only(left: 50, top: 10),
               decoration: new BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: CupertinoColors.lightBackgroundGray),
@@ -89,7 +89,7 @@ class SecondPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                         hintText: "Full Name",
                         filled: true,
-                        fillColor: Colors.grey,
+                        fillColor: Color.fromARGB(68, 114, 111, 111),
                       ),
                     ),
                   ),
@@ -102,7 +102,7 @@ class SecondPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                         hintText: "Email",
                         filled: true,
-                        fillColor: Colors.grey,
+                        fillColor: Color.fromARGB(68, 114, 111, 111),
                       ),
                     ),
                   ),
@@ -115,7 +115,7 @@ class SecondPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                         hintText: "Password",
                         filled: true,
-                        fillColor: Colors.grey,
+                        fillColor: Color.fromARGB(68, 114, 111, 111),
                       ),
                     ),
                   ),
@@ -128,7 +128,7 @@ class SecondPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                         hintText: "Confirm Passoword",
                         filled: true,
-                        fillColor: Colors.grey,
+                        fillColor: Color.fromARGB(68, 114, 111, 111),
                       ),
                     ),
                   ),
@@ -183,7 +183,7 @@ class ThirdPage extends StatelessWidget {
               children: [
                 Container(
                     width: 250,
-                    margin: EdgeInsets.only(left: 40, top: 10),
+                    margin: EdgeInsets.only(left: 50, top: 10),
                     decoration: new BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: CupertinoColors.lightBackgroundGray),
@@ -197,7 +197,7 @@ class ThirdPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10)),
                           hintText: "Email",
                           filled: true,
-                          fillColor: Colors.grey,
+                          fillColor: Color.fromARGB(68, 114, 111, 111),
                         )),
                       ),
                       SizedBox(height: 20),
@@ -209,7 +209,7 @@ class ThirdPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10)),
                             hintText: "Password",
                             filled: true,
-                            fillColor: Colors.grey,
+                            fillColor: Color.fromARGB(68, 114, 111, 111),
                           ),
                         ),
                       ),
