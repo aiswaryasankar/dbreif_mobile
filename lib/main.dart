@@ -155,6 +155,9 @@ class SecondPage extends StatelessWidget {
                               builder: (context) =>
                                   const ThirdPage(title: 'Sign In Page')));
                     },
+                    style: TextButton.styleFrom(
+                      primary: Colors.orange,
+                    ),
                     child: const Text('Already have an account?'),
                   ),
                 ],
@@ -240,6 +243,9 @@ class ThirdPage extends StatelessWidget {
                                   builder: (context) =>
                                       const SecondPage(title: 'Sign Up Page')));
                         },
+                        style: TextButton.styleFrom(
+                          primary: Colors.orange,
+                        ),
                         child: const Text("Don't have an account?"),
                       ),
                     ]))
