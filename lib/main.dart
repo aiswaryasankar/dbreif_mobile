@@ -184,6 +184,8 @@ class ThirdPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Image.network(
+                    'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110'),
                 Container(
                     width: 250,
                     margin: EdgeInsets.only(left: 50, top: 10),
