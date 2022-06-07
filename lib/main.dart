@@ -184,7 +184,6 @@ class ThirdPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset('images/logo.jpg'),
                 Container(
                     width: 250,
                     margin: EdgeInsets.only(left: 50, top: 10),
