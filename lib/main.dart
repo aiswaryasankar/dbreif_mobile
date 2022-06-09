@@ -31,6 +31,41 @@ class FirstPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+                margin: EdgeInsets.only(left: 65, right: 10),
+                child: Image.network(
+                    'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110')),
+            Container(
+                margin: EdgeInsets.only(left: 65, right: 10),
+                child: Image.network(
+                    'https://lh3.googleusercontent.com/b5o69m5j1njjvM3FpTPr-mONDyEWn4dc6G8-EGJag6D3r3BBXKlMc6ex90rwzdlztNiRhA=s144')),
+            Container(
+              child: Text(
+                "Get the entire news",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              child: Text(
+                "story in seconds",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              child: Text(
+                "Don't blindly believe the first tweet,",
+              ),
+            ),
+            Container(
+              child: Text(
+                "post, or article you read about a",
+              ),
+            ),
+            Container(
+              child: Text(
+                "story again.",
+              ),
+            ),
             RaisedButton(
               child: Text('Get Started'),
               onPressed: () {
@@ -50,6 +85,21 @@ class FirstPage extends StatelessWidget {
                         builder: (context) =>
                             const ThirdPage(title: 'Sign In Page')));
               },
+            ),
+            Container(
+              child: Text(
+                "Debrief.AI is a news search engine based on state of",
+              ),
+            ),
+            Container(
+              child: Text(
+                "the art research to search, summarie, and organize",
+              ),
+            ),
+            Container(
+              child: Text(
+                "news contect across all platforms",
+              ),
             ),
           ],
         ),
@@ -72,8 +122,10 @@ class SecondPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.network(
-                'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110'),
+            Container(
+                margin: EdgeInsets.only(left: 65, right: 10),
+                child: Image.network(
+                    'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110')),
             Container(
               width: 278,
               margin: EdgeInsets.only(left: 50, top: 10),
@@ -186,8 +238,10 @@ class ThirdPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.network(
-                    'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110'),
+                Container(
+                    margin: EdgeInsets.only(left: 65, right: 10),
+                    child: Image.network(
+                        'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110')),
                 Container(
                     width: 278,
                     margin: EdgeInsets.only(left: 50, top: 10),
