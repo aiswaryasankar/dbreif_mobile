@@ -72,12 +72,14 @@ class SecondPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Image.network(
+                'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110'),
             Container(
-              width: 250,
+              width: 278,
               margin: EdgeInsets.only(left: 50, top: 10),
               decoration: new BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: CupertinoColors.lightBackgroundGray),
+                  color: Color.fromARGB(255, 239, 238, 238)),
               child: Column(
                 children: [
                   SizedBox(height: 20),
@@ -89,7 +91,7 @@ class SecondPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                         hintText: "Full Name",
                         filled: true,
-                        fillColor: Color.fromARGB(68, 114, 111, 111),
+                        fillColor: Color.fromARGB(68, 162, 159, 159),
                       ),
                     ),
                   ),
@@ -102,7 +104,7 @@ class SecondPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                         hintText: "Email",
                         filled: true,
-                        fillColor: Color.fromARGB(68, 114, 111, 111),
+                        fillColor: Color.fromARGB(68, 162, 159, 159),
                       ),
                     ),
                   ),
@@ -115,7 +117,7 @@ class SecondPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                         hintText: "Password",
                         filled: true,
-                        fillColor: Color.fromARGB(68, 114, 111, 111),
+                        fillColor: Color.fromARGB(68, 162, 159, 159),
                       ),
                     ),
                   ),
@@ -128,7 +130,7 @@ class SecondPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                         hintText: "Confirm Passoword",
                         filled: true,
-                        fillColor: Color.fromARGB(68, 114, 111, 111),
+                        fillColor: Color.fromARGB(68, 162, 159, 159),
                       ),
                     ),
                   ),
@@ -187,11 +189,11 @@ class ThirdPage extends StatelessWidget {
                 Image.network(
                     'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110'),
                 Container(
-                    width: 250,
+                    width: 278,
                     margin: EdgeInsets.only(left: 50, top: 10),
                     decoration: new BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: CupertinoColors.lightBackgroundGray),
+                        color: Color.fromARGB(255, 239, 238, 238)),
                     child: Column(children: [
                       SizedBox(height: 20),
                       Container(
@@ -202,7 +204,7 @@ class ThirdPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10)),
                           hintText: "Email",
                           filled: true,
-                          fillColor: Color.fromARGB(68, 114, 111, 111),
+                          fillColor: Color.fromARGB(68, 162, 159, 159),
                         )),
                       ),
                       SizedBox(height: 20),
@@ -214,7 +216,7 @@ class ThirdPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10)),
                             hintText: "Password",
                             filled: true,
-                            fillColor: Color.fromARGB(68, 114, 111, 111),
+                            fillColor: Color.fromARGB(68, 162, 159, 159),
                           ),
                         ),
                       ),
