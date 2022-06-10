@@ -32,25 +32,35 @@ class FirstPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-                margin: EdgeInsets.only(left: 65, right: 10),
+                margin: EdgeInsets.only(left: 40, right: 40),
                 child: Image.network(
-                    'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110')),
+                    'https://lh3.googleusercontent.com/BBpGGMxXErenT0wD1RZCsmsUw5mfOeDDK4fhn0xOtc8wY37OusniLsbkakBa2SH2zrRKUg=s170')),
+            SizedBox(height: 22),
             Container(
-                margin: EdgeInsets.only(left: 65, right: 10),
+                margin: EdgeInsets.only(left: 40, right: 40),
                 child: Image.network(
-                    'https://lh3.googleusercontent.com/b5o69m5j1njjvM3FpTPr-mONDyEWn4dc6G8-EGJag6D3r3BBXKlMc6ex90rwzdlztNiRhA=s144')),
+                  'https://lh3.googleusercontent.com/sOGjXaEJT7FgLzjit30Vjc8njU8jxI6_E-09kb5fXMm7gXvdcy3t-79_4Eb4nepXHu_JUq4=s136',
+                  scale: .6,
+                )),
+            SizedBox(height: 15),
             Container(
               child: Text(
                 "Get the entire news",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             ),
+
             Container(
               child: Text(
                 "story in seconds",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
               ),
             ),
+
+            SizedBox(height: 15),
             Container(
               child: Text(
                 "Don't blindly believe the first tweet,",
@@ -66,26 +76,63 @@ class FirstPage extends StatelessWidget {
                 "story again.",
               ),
             ),
-            RaisedButton(
-              child: Text('Get Started'),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const SecondPage(title: 'Sign Up Page')));
-              },
+            SizedBox(height: 15),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 270,
+                height: 47.0,
+                child: RaisedButton(
+                  color: Colors.orange[700],
+                  //disabledColor: Colors.orange[700],
+                  textColor: Colors.white,
+                  //disabledTextColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    'Get Started',
+                    style: TextStyle(
+                        fontSize: 16.0, // insert your font size here
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const SecondPage(title: 'Sign Up Page')));
+                  },
+                ),
+              ),
             ),
-            RaisedButton(
-              child: Text('Login'),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const ThirdPage(title: 'Sign In Page')));
-              },
+            SizedBox(height: 4),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 270,
+                height: 35.0,
+                child: RaisedButton(
+                  textColor: Colors.grey[700],
+                  color: Colors.grey[300],
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    'Login',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const ThirdPage(title: 'Sign In Page')));
+                  },
+                ),
+              ),
             ),
+            //fix size
+            SizedBox(height: 10),
             Container(
               child: Text(
                 "Debrief.AI is a news search engine based on state of",
@@ -123,9 +170,9 @@ class SecondPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-                margin: EdgeInsets.only(left: 65, right: 10),
+                margin: EdgeInsets.only(left: 60, right: 10),
                 child: Image.network(
-                    'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110')),
+                    'https://lh3.googleusercontent.com/BBpGGMxXErenT0wD1RZCsmsUw5mfOeDDK4fhn0xOtc8wY37OusniLsbkakBa2SH2zrRKUg=s170')),
             Container(
               width: 278,
               margin: EdgeInsets.only(left: 50, top: 10),
@@ -188,7 +235,7 @@ class SecondPage extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   ButtonTheme(
-                    minWidth: 200,
+                    minWidth: 240,
                     height: 50.0,
                     child: RaisedButton(
                       color: Colors.orange[700],
@@ -239,9 +286,9 @@ class ThirdPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                    margin: EdgeInsets.only(left: 65, right: 10),
+                    margin: EdgeInsets.only(left: 60, right: 10),
                     child: Image.network(
-                        'https://lh3.googleusercontent.com/ObaAaXToAiSxwt34yp0n5Rxk36qPUIaiXnTe5wy8wN8uOIC3ALJ8X_Er_fUFuc7w3jMO7A=s110')),
+                        'https://lh3.googleusercontent.com/BBpGGMxXErenT0wD1RZCsmsUw5mfOeDDK4fhn0xOtc8wY37OusniLsbkakBa2SH2zrRKUg=s170')),
                 Container(
                     width: 278,
                     margin: EdgeInsets.only(left: 50, top: 10),
