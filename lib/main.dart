@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,61 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const FirstPage(title: 'Home'),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _isLoggedIn = false;
+  Map _userObj = {};
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Codesundar"),
+      ),
+      body: Container(
+        child: _isLoggedIn
+            ? Column(
+                children: [
+                  Image.network(_userObj["picture"]["data"]["url"]),
+                  Text(_userObj["name"]),
+                  Text(_userObj["email"]),
+                  TextButton(
+                      onPressed: () {
+                        FacebookAuth.instance.logOut().then((value) {
+                          setState(() {
+                            _isLoggedIn = false;
+                            _userObj = {};
+                          });
+                        });
+                      },
+                      child: Text("Logout"))
+                ],
+              )
+            : Center(
+                child: ElevatedButton(
+                  child: Text("Login with Facebook"),
+                  onPressed: () async {
+                    FacebookAuth.instance.login(
+                        permissions: ["public_profile", "email"]).then((value) {
+                      FacebookAuth.instance.getUserData().then((userData) {
+                        setState(() {
+                          _isLoggedIn = true;
+                          _userObj = userData;
+                        });
+                      });
+                    });
+                  },
+                ),
+              ),
+      ),
     );
   }
 }
@@ -102,6 +158,33 @@ class FirstPage extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) =>
                                 const SecondPage(title: 'Sign Up Page')));
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 4),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 270,
+                height: 47.0,
+                child: RaisedButton(
+                  color: Colors.blue[700],
+                  //disabledColor: Colors.orange[700],
+                  textColor: Colors.white,
+                  //disabledTextColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    'Go to Facebook',
+                    style: TextStyle(
+                        fontSize: 16.0, // insert your font size here
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
                   },
                 ),
               ),
