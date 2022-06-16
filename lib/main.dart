@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class FirstPage extends StatelessWidget {
   const FirstPage({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -35,12 +34,12 @@ class FirstPage extends StatelessWidget {
             Container(
                 margin: EdgeInsets.only(left: 40, right: 40),
                 child: Image.network(
-                    'https://lh3.googleusercontent.com/BBpGGMxXErenT0wD1RZCsmsUw5mfOeDDK4fhn0xOtc8wY37OusniLsbkakBa2SH2zrRKUg=s170')),
+                    'https://lh3.googleusercontent.com/v03VG2x0dRabjFJcBy3igJKX1g4Nl81OcRqL-6OSFtrpK6VVcVIeEzmKU-NXriVEsDa6PUo=s170')),
             SizedBox(height: 22),
             Container(
                 margin: EdgeInsets.only(left: 40, right: 40),
                 child: Image.network(
-                  'https://lh3.googleusercontent.com/sOGjXaEJT7FgLzjit30Vjc8njU8jxI6_E-09kb5fXMm7gXvdcy3t-79_4Eb4nepXHu_JUq4=s136',
+                  'https://lh3.googleusercontent.com/-QsiSeFhufaqug88GU48epFPaQNq95ARnS-AE2Iq692SUAt5Sx9uYeQWwScW_-rmLAjM=s144',
                   scale: .6,
                 )),
             SizedBox(height: 15),
@@ -107,7 +106,7 @@ class FirstPage extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             SizedBox(height: 4),
             Container(
               margin: EdgeInsets.only(left: 20, right: 20),
@@ -174,7 +173,7 @@ class SecondPage extends StatelessWidget {
             Container(
                 margin: EdgeInsets.only(left: 60, right: 10),
                 child: Image.network(
-                    'https://lh3.googleusercontent.com/BBpGGMxXErenT0wD1RZCsmsUw5mfOeDDK4fhn0xOtc8wY37OusniLsbkakBa2SH2zrRKUg=s170')),
+                    'https://lh3.googleusercontent.com/v03VG2x0dRabjFJcBy3igJKX1g4Nl81OcRqL-6OSFtrpK6VVcVIeEzmKU-NXriVEsDa6PUo=s170')),
             Container(
               width: 278,
               margin: EdgeInsets.only(left: 50, top: 10),
@@ -290,7 +289,7 @@ class ThirdPage extends StatelessWidget {
                 Container(
                     margin: EdgeInsets.only(left: 60, right: 10),
                     child: Image.network(
-                        'https://lh3.googleusercontent.com/BBpGGMxXErenT0wD1RZCsmsUw5mfOeDDK4fhn0xOtc8wY37OusniLsbkakBa2SH2zrRKUg=s170')),
+                        'https://lh3.googleusercontent.com/v03VG2x0dRabjFJcBy3igJKX1g4Nl81OcRqL-6OSFtrpK6VVcVIeEzmKU-NXriVEsDa6PUo=s170')),
                 Container(
                     width: 278,
                     margin: EdgeInsets.only(left: 50, top: 10),
