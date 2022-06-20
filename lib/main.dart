@@ -31,6 +31,7 @@ class FirstPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 40),
             Container(
                 margin: EdgeInsets.only(left: 40, right: 40),
                 child: Image.network(
@@ -150,8 +151,9 @@ class FirstPage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 150,
+              height: 110,
             ),
+
             Container(
               margin: EdgeInsets.only(left: 20, right: 20),
               child: ButtonTheme(
@@ -185,6 +187,7 @@ class FirstPage extends StatelessWidget {
               height: 20,
             ),
             Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                     width: 700.0,
@@ -192,7 +195,7 @@ class FirstPage extends StatelessWidget {
                         child: Text(
                       'Cross check any tweet, article,',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ))),
                 Container(
                     width: 700.0,
@@ -200,7 +203,7 @@ class FirstPage extends StatelessWidget {
                         child: Text(
                       'or comments against all',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ))),
                 Container(
                     width: 700.0,
@@ -208,7 +211,7 @@ class FirstPage extends StatelessWidget {
                         child: Text(
                       'content on the web',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                     ))),
                 SizedBox(height: 20.0),
                 Container(
@@ -216,14 +219,14 @@ class FirstPage extends StatelessWidget {
                     child: Center(
                         child: Text(
                       'Access additional relevant information from a',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 17),
                     ))),
                 Container(
                     width: 700.0,
                     child: Center(
                         child: Text(
                       'holistic vantage point wherever you are',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 17),
                     ))),
                 SizedBox(height: 20.0),
                 Container(
@@ -231,6 +234,7 @@ class FirstPage extends StatelessWidget {
                     child: Image.network(
                         scale: 0.2,
                         'https://lh3.googleusercontent.com/Ui1bSXmeLCR9dqUmjzRGEdIyRqR6BRa6TuOsMo9CTcvX70SDpmokrF8ghWUgI-FFJJWGxp8=s95')),
+                SizedBox(height: 200),
               ],
             ),
           ],
