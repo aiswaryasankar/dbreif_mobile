@@ -27,10 +27,10 @@ class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Container(
                 margin: EdgeInsets.only(left: 40, right: 40),
                 child: Image.network(
@@ -148,6 +148,90 @@ class FirstPage extends StatelessWidget {
               child: Text(
                 "news contect across all platforms",
               ),
+            ),
+            SizedBox(
+              height: 150,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 70.0,
+                height: 55.0,
+                child: RaisedButton(
+                  color: Colors.orange[700],
+                  //disabledColor: Colors.orange[700],
+                  textColor: Colors.white,
+                  //disabledTextColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    '2',
+                    style: TextStyle(
+                        fontSize: 40.0, // insert your font size here
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const SecondPage(title: 'Sign Up Page')));
+                  },
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Column(
+              children: [
+                Container(
+                    width: 700.0,
+                    child: Center(
+                        child: Text(
+                      'Cross check any tweet, article,',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    ))),
+                Container(
+                    width: 700.0,
+                    child: Center(
+                        child: Text(
+                      'or comments against all',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    ))),
+                Container(
+                    width: 700.0,
+                    child: Center(
+                        child: Text(
+                      'content on the web',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    ))),
+                SizedBox(height: 20.0),
+                Container(
+                    width: 700.0,
+                    child: Center(
+                        child: Text(
+                      'Access additional relevant information from a',
+                      style: TextStyle(fontSize: 20),
+                    ))),
+                Container(
+                    width: 700.0,
+                    child: Center(
+                        child: Text(
+                      'holistic vantage point wherever you are',
+                      style: TextStyle(fontSize: 20),
+                    ))),
+                SizedBox(height: 20.0),
+                Container(
+                    margin: EdgeInsets.only(left: 100, right: 100),
+                    child: Image.network(
+                        scale: 0.2,
+                        'https://lh3.googleusercontent.com/Ui1bSXmeLCR9dqUmjzRGEdIyRqR6BRa6TuOsMo9CTcvX70SDpmokrF8ghWUgI-FFJJWGxp8=s95')),
+              ],
             ),
           ],
         ),
