@@ -34,15 +34,11 @@ class FirstPage extends StatelessWidget {
             SizedBox(height: 40),
             Container(
                 margin: EdgeInsets.only(left: 40, right: 40),
-                child: Image.network(
-                    'https://lh3.googleusercontent.com/v03VG2x0dRabjFJcBy3igJKX1g4Nl81OcRqL-6OSFtrpK6VVcVIeEzmKU-NXriVEsDa6PUo=s170')),
+                child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
             SizedBox(height: 22),
             Container(
                 margin: EdgeInsets.only(left: 40, right: 40),
-                child: Image.network(
-                  'https://lh3.googleusercontent.com/-QsiSeFhufaqug88GU48epFPaQNq95ARnS-AE2Iq692SUAt5Sx9uYeQWwScW_-rmLAjM=s144',
-                  scale: .6,
-                )),
+                child: Image(image: AssetImage('assets/dbriefLaptop.jpg'))),
             SizedBox(height: 15),
             Container(
               child: Text(
@@ -231,9 +227,7 @@ class FirstPage extends StatelessWidget {
                 SizedBox(height: 20.0),
                 Container(
                     margin: EdgeInsets.only(left: 100, right: 100),
-                    child: Image.network(
-                        scale: 0.2,
-                        'https://lh3.googleusercontent.com/Ui1bSXmeLCR9dqUmjzRGEdIyRqR6BRa6TuOsMo9CTcvX70SDpmokrF8ghWUgI-FFJJWGxp8=s95')),
+                    child: Image(image: AssetImage('assets/dbriefChat.JPG'))),
                 SizedBox(height: 200),
               ],
             ),
@@ -260,8 +254,7 @@ class SecondPage extends StatelessWidget {
           children: [
             Container(
                 margin: EdgeInsets.only(left: 60, right: 10),
-                child: Image.network(
-                    'https://lh3.googleusercontent.com/v03VG2x0dRabjFJcBy3igJKX1g4Nl81OcRqL-6OSFtrpK6VVcVIeEzmKU-NXriVEsDa6PUo=s170')),
+                child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
             Container(
               width: 278,
               margin: EdgeInsets.only(left: 50, top: 10),
@@ -376,8 +369,7 @@ class ThirdPage extends StatelessWidget {
               children: [
                 Container(
                     margin: EdgeInsets.only(left: 60, right: 10),
-                    child: Image.network(
-                        'https://lh3.googleusercontent.com/v03VG2x0dRabjFJcBy3igJKX1g4Nl81OcRqL-6OSFtrpK6VVcVIeEzmKU-NXriVEsDa6PUo=s170')),
+                    child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
                 Container(
                     width: 278,
                     margin: EdgeInsets.only(left: 50, top: 10),
