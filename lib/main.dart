@@ -31,11 +31,11 @@ class FirstPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 40),
+            SizedBox(height: 80),
             Container(
                 margin: EdgeInsets.only(left: 40, right: 40),
                 child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
-            SizedBox(height: 22),
+            SizedBox(height: 50),
             Container(
                 margin: EdgeInsets.only(left: 40, right: 40),
                 child: Image(image: AssetImage('assets/dbriefLaptop.jpg'))),
@@ -57,7 +57,7 @@ class FirstPage extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 15),
+            SizedBox(height: 20),
             Container(
               child: Text(
                 "Don't blindly believe the first tweet,",
@@ -73,7 +73,7 @@ class FirstPage extends StatelessWidget {
                 "story again.",
               ),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 20),
             Container(
               margin: EdgeInsets.only(left: 20, right: 20),
               child: ButtonTheme(
@@ -130,7 +130,7 @@ class FirstPage extends StatelessWidget {
               ),
             ),
             //fix size
-            SizedBox(height: 10),
+            SizedBox(height: 40),
             Container(
               child: Text(
                 "Debrief.AI is a news search engine based on state of",
@@ -147,7 +147,7 @@ class FirstPage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 110,
+              height: 90,
             ),
 
             Container(
@@ -227,8 +227,13 @@ class FirstPage extends StatelessWidget {
                 SizedBox(height: 20.0),
                 Container(
                     margin: EdgeInsets.only(left: 100, right: 100),
-                    child: Image(image: AssetImage('assets/dbriefChat.JPG'))),
-                SizedBox(height: 200),
+                    child: Image(
+                      image: AssetImage('assets/dbriefChat.JPG'),
+                      //height: 10000,
+                      //width: 500,
+                      //fit: BoxFit.fill
+                    )),
+                SizedBox(height: 300),
               ],
             ),
           ],
