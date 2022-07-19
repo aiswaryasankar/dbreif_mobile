@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "559932071090",
+    "project_id": "dbrief-de775",
+    "storage_bucket": "dbrief-de775.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559932071090:android:576b41841c979cea7c3dab",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559932071090-3aeicqdn3svhumlskqq0a98odcjrh38t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaZC4AnlLryWW09ER-oO1kN-E2SidzP30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559932071090-3aeicqdn3svhumlskqq0a98odcjrh38t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
