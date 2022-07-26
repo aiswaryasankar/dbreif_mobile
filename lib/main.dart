@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,15 @@ import 'package:email_validator/email_validator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+GoogleSignIn _googleSignIn = GoogleSignIn(scopes: [
+  'email',
+  //'https://www.googleapis.com/auth/contacts.readonly',
+]);
+
+String gUser = "";
 
 class nextPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -28,6 +38,12 @@ class GoogleSignInApp extends StatefulWidget {
 
 class _GoogleSignInAppState extends State<GoogleSignInApp> {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+
+  @override
+  void initState() {
+    _googleSignIn.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     GoogleSignInAccount? user = _googleSignIn.currentUser;
@@ -46,7 +62,7 @@ class _GoogleSignInAppState extends State<GoogleSignInApp> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        width: 200,
+                        width: 135,
                         margin: EdgeInsets.only(bottom: 110),
                         child: Image.asset(
                           'assets/google.JPG',
@@ -92,6 +108,9 @@ class _GoogleSignInAppState extends State<GoogleSignInApp> {
                         onPressed: user == null
                             ? null
                             : () async {
+                                setData(user.email, user.displayName!,
+                                    user.photoUrl!, user.serverAuthCode!);
+                                gUser = user.email;
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -99,6 +118,15 @@ class _GoogleSignInAppState extends State<GoogleSignInApp> {
                               }),
                   ]),
             )));
+  }
+
+  Future<void> setData(
+      String email, String name, String photoUrl, String AuthCode) async {
+    final SharedPreferences gPref = await SharedPreferences.getInstance();
+    gPref.setString('email', email);
+    gPref.setString('name', name);
+    gPref.setString('photoUrl', photoUrl);
+    gPref.setString('authCode', AuthCode);
   }
 }
 
@@ -314,6 +342,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final fullNameController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
@@ -325,75 +355,139 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Form(
+      padding: EdgeInsets.all(16),
+      child: Form(
           key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 60),
-              FlutterLogo(size: 120),
-              SizedBox(height: 20),
-              Text(
-                'Hey There,\n Welcome Back',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 32),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(height: 120),
+            Container(
+              margin: EdgeInsets.only(left: 40, right: 30),
+              child: Image(image: AssetImage('assets/dbriefLogo.JPG')),
+            ),
+            Container(
+              width: 278,
+              margin: EdgeInsets.only(top: 30),
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color.fromARGB(255, 239, 238, 238),
               ),
-              SizedBox(height: 40),
-              TextFormField(
-                  controller: emailController,
-                  cursorColor: Colors.white,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(labelText: 'Email'),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (email) =>
-                      email != null && !EmailValidator.validate(email)
-                          ? 'Enter a valid email'
-                          : null),
-              SizedBox(height: 4),
-              TextFormField(
-                controller: passwordController,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) => value != null && value.length < 8
-                    ? 'Enter minimum 8 characters'
-                    : null,
-              ),
-              SizedBox(height: 20),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(50),
-                ),
-                icon: Icon(Icons.arrow_forward, size: 32),
-                label: Text(
-                  'Sign Up',
-                  style: TextStyle(fontSize: 24),
-                ),
-                onPressed: signUp,
-              ),
-              SizedBox(height: 20),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(color: Colors.black),
-                  text: 'Already have an account?  ',
-                  children: [
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = widget.onClickedSignIn,
-                      text: 'Log In',
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Theme.of(context).colorScheme.secondary),
+              child: Column(
+                children: [
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: 'Full Name',
+                          filled: true,
+                          fillColor: Color.fromARGB(68, 162, 159, 159)),
+                      controller: fullNameController,
+                      cursorColor: Colors.white,
+                      textInputAction: TextInputAction.next,
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextFormField(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintText: 'Email',
+                            filled: true,
+                            fillColor: Color.fromARGB(68, 162, 159, 159)),
+                        controller: emailController,
+                        cursorColor: Colors.white,
+                        textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (email) =>
+                            email != null && !EmailValidator.validate(email)
+                                ? 'Enter a valid email'
+                                : null),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: 'Password',
+                        filled: true,
+                        fillColor: Color.fromARGB(68, 162, 159, 159),
+                      ),
+                      controller: passwordController,
+                      textInputAction: TextInputAction.next,
+                      obscureText: true,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) => value != null && value.length < 8
+                          ? 'Enter minimum 8 characters'
+                          : null,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: 'Confirm Password',
+                          filled: true,
+                          fillColor: Color.fromARGB(68, 162, 159, 159)),
+                      controller: confirmPasswordController,
+                      cursorColor: Colors.white,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) => value != passwordController.text
+                          ? 'Passwords do not match'
+                          : null,
+                    ),
+                  ),
+                  SizedBox(height: 18),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: ButtonTheme(
+                      minWidth: 270,
+                      height: 50,
+                      child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size.fromHeight(50),
+                              primary: Colors.orange[700],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                          icon: Icon(Icons.arrow_forward, size: 32),
+                          label: Text(
+                            'Register',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          onPressed: () {
+                            signUp();
+                          }),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = widget.onClickedSignIn,
+                          text: 'Already have an account?',
+                          style: TextStyle(
+                              decoration: TextDecoration.none,
+                              color: Colors.orange[700]),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                ],
               ),
-            ],
-          ),
-        ),
-      );
+            ),
+          ])));
   Future signUp() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
@@ -403,11 +497,224 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      final user = FirebaseAuth.instance.currentUser!;
+      postdata(fullNameController.text, user.uid);
     } on FirebaseAuthException catch (e) {
       print(e);
 
       Utils.showSnackBar(e.message);
     }
+  }
+
+  postdata(String fullName, String authID) async {
+    String fullName = fullNameController.text;
+    var names = fullName.split(' ');
+    String firstName = names[0];
+    String lastName = names[1];
+
+    var response = await http.post(
+        Uri.parse(
+            "https://ddbrief.com/createUser/?Content-Type=application/json&Accept=application/json,text/plain,/"),
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json"
+        },
+        body: jsonEncode({
+          "user": {
+            "FirebaseAuthID": authID,
+            "FirstName": firstName,
+            "LastName": lastName,
+            "Email": emailController.text
+          }
+        }));
+    print(response.body);
+  }
+}
+
+class SignUpWidget2 extends StatefulWidget {
+  const SignUpWidget2({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _SignUpWidget2State createState() => _SignUpWidget2State();
+}
+
+class _SignUpWidget2State extends State<SignUpWidget2> {
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final fullNameController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: Form(
+          key: formKey,
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(height: 120),
+            Container(
+              margin: EdgeInsets.only(left: 40, right: 30),
+              child: Image(image: AssetImage('assets/dbriefLogo.JPG')),
+            ),
+            Container(
+              width: 278,
+              margin: EdgeInsets.only(top: 30),
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color.fromARGB(255, 239, 238, 238),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: 'Full Name',
+                          filled: true,
+                          fillColor: Color.fromARGB(68, 162, 159, 159)),
+                      controller: fullNameController,
+                      cursorColor: Colors.white,
+                      textInputAction: TextInputAction.next,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextFormField(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintText: 'Email',
+                            filled: true,
+                            fillColor: Color.fromARGB(68, 162, 159, 159)),
+                        controller: emailController,
+                        cursorColor: Colors.white,
+                        textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (email) =>
+                            email != null && !EmailValidator.validate(email)
+                                ? 'Enter a valid email'
+                                : null),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        hintText: 'Password',
+                        filled: true,
+                        fillColor: Color.fromARGB(68, 162, 159, 159),
+                      ),
+                      controller: passwordController,
+                      textInputAction: TextInputAction.next,
+                      obscureText: true,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) => value != null && value.length < 8
+                          ? 'Enter minimum 8 characters'
+                          : null,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: 'Confirm Password',
+                          filled: true,
+                          fillColor: Color.fromARGB(68, 162, 159, 159)),
+                      controller: confirmPasswordController,
+                      cursorColor: Colors.white,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) => value != passwordController.text
+                          ? 'Passwords do not match'
+                          : null,
+                    ),
+                  ),
+                  SizedBox(height: 18),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: ButtonTheme(
+                      minWidth: 270,
+                      height: 50,
+                      child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: Size.fromHeight(50),
+                              primary: Colors.orange[700],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                          icon: Icon(Icons.arrow_forward, size: 32),
+                          label: Text(
+                            'Register',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          onPressed: () {
+                            signUp();
+                          }),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ])));
+  Future signUp() async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
+
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      final user = FirebaseAuth.instance.currentUser!;
+      postdata(fullNameController.text, user.uid);
+    } on FirebaseAuthException catch (e) {
+      print(e);
+
+      Utils.showSnackBar(e.message);
+    }
+  }
+
+  postdata(String fullName, String authID) async {
+    String fullName = fullNameController.text;
+    var names = fullName.split(' ');
+    String firstName = names[0];
+    String lastName = names[1];
+
+    var response = await http.post(
+        Uri.parse(
+            "https://ddbrief.com/createUser/?Content-Type=application/json&Accept=application/json,text/plain,/"),
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json"
+        },
+        body: jsonEncode({
+          "user": {
+            "FirebaseAuthID": authID,
+            "FirstName": firstName,
+            "LastName": lastName,
+            "Email": emailController.text
+          }
+        }));
+    print(response.body);
   }
 }
 
@@ -436,80 +743,121 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-        padding: EdgeInsets.all(16),
-        child: Column(
+      padding: EdgeInsets.all(16),
+      child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 40),
-            TextField(
-              controller: emailController,
-              cursorColor: Colors.white,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            SizedBox(height: 4),
-            TextField(
-              controller: PasswordController,
-              textInputAction: TextInputAction.done,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size.fromHeight(50),
-              ),
-              icon: Icon(Icons.lock_open, size: 32),
-              label: Text(
-                'Sign In',
-                style: TextStyle(fontSize: 24),
-              ),
-              onPressed: signIn,
-            ),
-            SizedBox(height: 24),
-            GestureDetector(
-              child: Text(
-                'Forgot Password?',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: Theme.of(context).colorScheme.secondary,
-                  fontSize: 20,
-                ),
-              ),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ForgotPasswordPage(),
-              )),
-            ),
-            RichText(
-              text: TextSpan(
-                style: TextStyle(color: Colors.black),
-                text: 'No account?  ',
+            SizedBox(height: 200),
+            Container(
+                margin: EdgeInsets.only(left: 40, right: 30),
+                child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
+            Container(
+              width: 278,
+              margin: EdgeInsets.only(top: 30),
+              decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color.fromARGB(255, 239, 238, 238)),
+              child: Column(
                 children: [
-                  TextSpan(
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = widget.onClickedSignUp,
-                    text: 'Sign up',
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Theme.of(context).colorScheme.secondary),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextField(
+                      controller: emailController,
+                      cursorColor: Colors.white,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: "Email",
+                          filled: true,
+                          fillColor: Color.fromARGB(68, 162, 159, 159)),
+                    ),
                   ),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: TextField(
+                      controller: PasswordController,
+                      cursorColor: Colors.white,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          hintText: "Password",
+                          filled: true,
+                          fillColor: Color.fromARGB(68, 162, 159, 159)),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20),
+                    child: ButtonTheme(
+                      minWidth: 270,
+                      height: 50,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.orange[700],
+                            minimumSize: Size.fromHeight(50),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                        icon: Icon(Icons.lock_open, size: 32),
+                        label: Text(
+                          'Login',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        onPressed: signIn,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  Container(
+                    child: RichText(
+                      textScaleFactor:
+                          MediaQuery.of(context).textScaleFactor + 0.15,
+                      text: TextSpan(
+                        style: TextStyle(color: Colors.black),
+                        children: [
+                          TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = widget.onClickedSignUp,
+                            text: "Don't have an account?",
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                color: Colors.orange[700]),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15),
                 ],
               ),
-            ),
-          ],
-        ),
-      );
+            )
+          ]));
   Future signIn() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text.trim(),
         password: PasswordController.text.trim(),
       );
+      final user = FirebaseAuth.instance.currentUser!;
+      setData(user.email!, user.displayName!, user.photoURL!, user.uid);
     } on FirebaseAuthException catch (e) {
       print(e);
 
       Utils.showSnackBar(e.message);
     }
+  }
+
+  Future<void> setData(
+      String email, String name, String photoUrl, String AuthCode) async {
+    final SharedPreferences gPref = await SharedPreferences.getInstance();
+    gPref.setString('email', email);
+    gPref.setString('name', name);
+    gPref.setString('photoUrl', photoUrl);
+    gPref.setString('authCode', AuthCode);
   }
 }
 
@@ -537,6 +885,7 @@ class MyApp extends StatelessWidget {
 class FirstPage extends StatelessWidget {
   const FirstPage({Key? key, required this.title}) : super(key: key);
   final String title;
+  final bool isLogin = true;
 
   @override
   Widget build(BuildContext context) {
@@ -545,7 +894,7 @@ class FirstPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 40),
+            SizedBox(height: 60),
             Container(
                 width: 250,
                 margin: EdgeInsets.only(left: 40, right: 40),
@@ -561,7 +910,6 @@ class FirstPage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             ),
-
             Container(
               child: Text(
                 "story in seconds",
@@ -571,7 +919,6 @@ class FirstPage extends StatelessWidget {
                 ),
               ),
             ),
-
             SizedBox(height: 15),
             Container(
               child: Text(
@@ -602,7 +949,7 @@ class FirstPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Text(
-                    'Get Started',
+                    'Login',
                     style: TextStyle(
                         fontSize: 16.0, // insert your font size here
                         fontWeight: FontWeight.bold),
@@ -612,39 +959,14 @@ class FirstPage extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                const SecondPage(title: 'Sign Up Page')));
+                            builder: (context) => const FourthPage(
+                                  title: "Login Page",
+                                )));
                   },
                 ),
               ),
             ),
             SizedBox(height: 4),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: ButtonTheme(
-                minWidth: 270,
-                height: 35.0,
-                child: RaisedButton(
-                  textColor: Colors.red[700],
-                  color: Colors.red[300],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Text(
-                    'Firebase',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const FourthPage(title: 'Firebase')));
-                  },
-                ),
-              ),
-            ),
-            SizedBox(height: 4),
-
             Container(
               margin: EdgeInsets.only(left: 20, right: 20),
               width: 270,
@@ -671,34 +993,7 @@ class FirstPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 4),
-
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: ButtonTheme(
-                minWidth: 270,
-                height: 35.0,
-                child: RaisedButton(
-                  textColor: Colors.grey[700],
-                  color: Colors.grey[300],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const ThirdPage(title: 'Sign In Page')));
-                  },
-                ),
-              ),
-            ),
-            //fix size
-            SizedBox(height: 10),
+            SizedBox(height: 30),
             Container(
               child: Text(
                 "Debrief.AI is a news search engine based on state of",
@@ -764,9 +1059,7 @@ class FirstPage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             ),
-
             SizedBox(height: 15),
-
             Container(
                 width: 700.0,
                 child: Center(
@@ -781,13 +1074,11 @@ class FirstPage extends StatelessWidget {
                   'articles, shows and content yourself',
                   style: TextStyle(fontSize: 17),
                 ))),
-
             SizedBox(height: 25),
             Container(
                 margin: EdgeInsets.only(left: 30, right: 30),
                 child: Image(image: AssetImage('assets/dbriefOne.JPG'))),
             SizedBox(height: 120),
-
             Container(
               margin: EdgeInsets.only(left: 20, right: 20),
               child: ButtonTheme(
@@ -1235,13 +1526,101 @@ class FourthPage extends StatelessWidget {
           }));
 }
 
-class HomePage extends StatelessWidget {
+class fifthPage extends StatefulWidget {
+  const fifthPage({Key? key}) : super(key: key);
+
+  @override
+  State<fifthPage> createState() => _fifthPageState();
+}
+
+class _fifthPageState extends State<fifthPage> {
+  GoogleSignInAccount? _currentUser;
+
+  Future<void> _handleSignIn() async {
+    try {
+      await _googleSignIn.signIn();
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  @override
+  void initState() {
+    _googleSignIn.onCurrentUserChanged.listen((event) {
+      setState(() {
+        _currentUser = event;
+      });
+    });
+    _googleSignIn.signInSilently();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
+    return Scaffold(
+        appBar:
+            AppBar(title: Text(_currentUser == null ? 'Login' : 'Dashboard')),
+        body: _currentUser == null
+            ? Container(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                    Container(
+                        width: 200,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.blueGrey),
+                            onPressed: () => _handleSignIn(),
+                            child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Sign in with google Test'),
+                                  ],
+                                ))))
+                  ]))
+            : Container(
+                child: ListTile(
+                  leading: GoogleUserCircleAvatar(identity: _currentUser!),
+                  title: Text(_currentUser!.displayName ?? ''),
+                  subtitle: Text(_currentUser!.email),
+                  trailing: IconButton(
+                    onPressed: () {
+                      _googleSignIn.disconnect();
+                    },
+                    icon: Icon(Icons.logout),
+                  ),
+                ),
+              ));
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String? gEmail;
+  String? gName;
+  String? gPhoto;
+  String? gAuthCode;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text('Sign in Success'),
       ),
       body: Padding(
         padding: EdgeInsets.all(32),
@@ -1249,30 +1628,49 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Signed In as',
+              'Signed in as',
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 8),
-            Text(
-              user.email!,
-              style: TextStyle(fontSize: 16),
+            Container(
+              child: gEmail == null ? Text('No Data') : Text(gEmail!),
             ),
-            SizedBox(height: 40),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size.fromHeight(50),
-              ),
-              icon: Icon(Icons.arrow_back, size: 32),
-              label: Text(
-                'Sign Out',
-                style: TextStyle(fontSize: 24),
-              ),
-              onPressed: () => FirebaseAuth.instance.signOut(),
-            )
+            SizedBox(height: 20),
+            Container(
+              child: gName == null ? Text('No Data') : Text(gName!),
+            ),
+            SizedBox(height: 20),
+            Container(
+              child: gPhoto == null ? Text('No Data') : Image.network(gPhoto!),
+            ),
+            SizedBox(height: 20),
+            Container(
+              child: gAuthCode == null ? Text('No Data') : Text(gAuthCode!),
+            ),
+            SizedBox(height: 15),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    fixedSize: Size(130, 20), primary: Colors.red),
+                child: Text('Sign Out'),
+                onPressed: () async {
+                  await _googleSignIn.signOut();
+                  FirebaseAuth.instance.signOut();
+                  setState(() {});
+                }),
           ],
         ),
       ),
     );
+  }
+
+  void getData() async {
+    final SharedPreferences gPref = await SharedPreferences.getInstance();
+    gEmail = gPref.getString('email');
+    gName = gPref.getString('name');
+    gPhoto = gPref.getString('photoUrl');
+    gAuthCode = gPref.getString('authCode');
+
+    setState(() {});
   }
 }
 
