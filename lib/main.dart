@@ -217,15 +217,22 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                 ),
                 SizedBox(height: 8),
                 TextButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(50),
-                  ),
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  onPressed: () => FirebaseAuth.instance.signOut(),
-                )
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size.fromHeight(50),
+                    ),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const FirstPage(
+                                    title: 'FirstPage',
+                                  )));
+                    })
               ],
             ),
           ),
@@ -327,11 +334,8 @@ class Utils {
 }
 
 class SignUpWidget extends StatefulWidget {
-  final Function() onClickedSignIn;
-
   const SignUpWidget({
     Key? key,
-    required this.onClickedSignIn,
   }) : super(key: key);
 
   @override
@@ -354,140 +358,170 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-      padding: EdgeInsets.all(16),
-      child: Form(
-          key: formKey,
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            SizedBox(height: 120),
-            Container(
-              margin: EdgeInsets.only(left: 40, right: 30),
-              child: Image(image: AssetImage('assets/dbriefLogo.JPG')),
-            ),
-            Container(
-              width: 278,
-              margin: EdgeInsets.only(top: 30),
-              decoration: new BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Color.fromARGB(255, 239, 238, 238),
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: 20),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: 'Full Name',
-                          filled: true,
-                          fillColor: Color.fromARGB(68, 162, 159, 159)),
-                      controller: fullNameController,
-                      cursorColor: Colors.white,
-                      textInputAction: TextInputAction.next,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: TextFormField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Email',
-                            filled: true,
-                            fillColor: Color.fromARGB(68, 162, 159, 159)),
-                        controller: emailController,
-                        cursorColor: Colors.white,
-                        textInputAction: TextInputAction.next,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (email) =>
-                            email != null && !EmailValidator.validate(email)
-                                ? 'Enter a valid email'
-                                : null),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintText: 'Password',
-                        filled: true,
-                        fillColor: Color.fromARGB(68, 162, 159, 159),
+  Widget build(BuildContext context) => Scaffold(
+        body: SingleChildScrollView(
+            padding: EdgeInsets.all(16),
+            child: Form(
+                key: formKey,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 120),
+                      Container(
+                        margin: EdgeInsets.only(left: 40, right: 30),
+                        child:
+                            Image(image: AssetImage('assets/dbriefLogo.JPG')),
                       ),
-                      controller: passwordController,
-                      textInputAction: TextInputAction.next,
-                      obscureText: true,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) => value != null && value.length < 8
-                          ? 'Enter minimum 8 characters'
-                          : null,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: 'Confirm Password',
-                          filled: true,
-                          fillColor: Color.fromARGB(68, 162, 159, 159)),
-                      controller: confirmPasswordController,
-                      cursorColor: Colors.white,
-                      textInputAction: TextInputAction.next,
-                      validator: (value) => value != passwordController.text
-                          ? 'Passwords do not match'
-                          : null,
-                    ),
-                  ),
-                  SizedBox(height: 18),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: ButtonTheme(
-                      minWidth: 270,
-                      height: 50,
-                      child: ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: Size.fromHeight(50),
-                              primary: Colors.orange[700],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                          icon: Icon(Icons.arrow_forward, size: 32),
-                          label: Text(
-                            'Register',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          onPressed: () {
-                            signUp();
-                          }),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(color: Colors.black),
-                      children: [
-                        TextSpan(
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = widget.onClickedSignIn,
-                          text: 'Already have an account?',
-                          style: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: Colors.orange[700]),
+                      Container(
+                        width: 278,
+                        margin: EdgeInsets.only(top: 30),
+                        decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color.fromARGB(255, 239, 238, 238),
                         ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
-          ])));
+                        child: Column(
+                          children: [
+                            SizedBox(height: 20),
+                            Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    hintText: 'Full Name',
+                                    filled: true,
+                                    fillColor:
+                                        Color.fromARGB(68, 162, 159, 159)),
+                                controller: fullNameController,
+                                cursorColor: Colors.white,
+                                textInputAction: TextInputAction.next,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: TextFormField(
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      hintText: 'Email',
+                                      filled: true,
+                                      fillColor:
+                                          Color.fromARGB(68, 162, 159, 159)),
+                                  controller: emailController,
+                                  cursorColor: Colors.white,
+                                  textInputAction: TextInputAction.next,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (email) => email != null &&
+                                          !EmailValidator.validate(email)
+                                      ? 'Enter a valid email'
+                                      : null),
+                            ),
+                            SizedBox(height: 20),
+                            Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: 'Password',
+                                  filled: true,
+                                  fillColor: Color.fromARGB(68, 162, 159, 159),
+                                ),
+                                controller: passwordController,
+                                textInputAction: TextInputAction.next,
+                                obscureText: true,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                validator: (value) =>
+                                    value != null && value.length < 8
+                                        ? 'Enter minimum 8 characters'
+                                        : null,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    hintText: 'Confirm Password',
+                                    filled: true,
+                                    fillColor:
+                                        Color.fromARGB(68, 162, 159, 159)),
+                                controller: confirmPasswordController,
+                                cursorColor: Colors.white,
+                                textInputAction: TextInputAction.next,
+                                validator: (value) =>
+                                    value != passwordController.text
+                                        ? 'Passwords do not match'
+                                        : null,
+                              ),
+                            ),
+                            SizedBox(height: 18),
+                            Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: ButtonTheme(
+                                minWidth: 270,
+                                height: 50,
+                                child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                        minimumSize: Size.fromHeight(50),
+                                        primary: Colors.orange[700],
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10))),
+                                    icon: Icon(Icons.arrow_forward, size: 32),
+                                    label: Text(
+                                      'Register',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    onPressed: () {
+                                      signUp();
+                                    }),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: ButtonTheme(
+                                minWidth: 270,
+                                height: 50,
+                                child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.orange[700],
+                                      minimumSize: Size.fromHeight(50),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  icon: Icon(Icons.lock_open, size: 32),
+                                  label: Text(
+                                    'Log in',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const FourthPage(
+                                                  title: 'Login Page',
+                                                )));
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),
+                      ),
+                    ]))),
+      );
   Future signUp() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
@@ -499,6 +533,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       );
       final user = FirebaseAuth.instance.currentUser!;
       postdata(fullNameController.text, user.uid);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => VerifyEmailPage()));
     } on FirebaseAuthException catch (e) {
       print(e);
 
@@ -509,23 +545,25 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   postdata(String fullName, String authID) async {
     String fullName = fullNameController.text;
     var names = fullName.split(' ');
+    var lastName;
     String firstName = names[0];
-    String lastName = names[1];
+    if (firstName == fullName) {
+      lastName = "";
+    } else {
+      lastName = names[1];
+    }
 
     var response = await http.post(
-        Uri.parse(
-            "https://ddbrief.com/createUser/?Content-Type=application/json&Accept=application/json,text/plain,/"),
+        Uri.parse("https://62da7ba3e56f6d82a762c9bf.mockapi.io/test"),
         headers: {
           "Content-type": "application/json",
           "Accept": "application/json"
         },
         body: jsonEncode({
-          "user": {
-            "FirebaseAuthID": authID,
-            "FirstName": firstName,
-            "LastName": lastName,
-            "Email": emailController.text
-          }
+          "FirebaseAuthID": authID,
+          "FirstName": firstName,
+          "LastName": lastName,
+          "Email": emailController.text
         }));
     print(response.body);
   }
@@ -719,11 +757,8 @@ class _SignUpWidget2State extends State<SignUpWidget2> {
 }
 
 class LoginWidget extends StatefulWidget {
-  final VoidCallback onClickedSignUp;
-
   const LoginWidget({
     Key? key,
-    required this.onClickedSignUp,
   }) : super(key: key);
   @override
   _LoginWidgetState createState() => _LoginWidgetState();
@@ -742,100 +777,109 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-      padding: EdgeInsets.all(16),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 200),
-            Container(
-                margin: EdgeInsets.only(left: 40, right: 30),
-                child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
-            Container(
-              width: 278,
-              margin: EdgeInsets.only(top: 30),
-              decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 239, 238, 238)),
-              child: Column(
+  Widget build(BuildContext context) => Scaffold(
+        body: SingleChildScrollView(
+            padding: EdgeInsets.all(16),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 20),
+                  SizedBox(height: 200),
                   Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: TextField(
-                      controller: emailController,
-                      cursorColor: Colors.white,
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: "Email",
-                          filled: true,
-                          fillColor: Color.fromARGB(68, 162, 159, 159)),
-                    ),
-                  ),
-                  SizedBox(height: 20),
+                      margin: EdgeInsets.only(left: 40, right: 30),
+                      child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
                   Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: TextField(
-                      controller: PasswordController,
-                      cursorColor: Colors.white,
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: "Password",
-                          filled: true,
-                          fillColor: Color.fromARGB(68, 162, 159, 159)),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: ButtonTheme(
-                      minWidth: 270,
-                      height: 50,
-                      child: ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.orange[700],
-                            minimumSize: Size.fromHeight(50),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                        icon: Icon(Icons.lock_open, size: 32),
-                        label: Text(
-                          'Login',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        onPressed: signIn,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  Container(
-                    child: RichText(
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor + 0.15,
-                      text: TextSpan(
-                        style: TextStyle(color: Colors.black),
-                        children: [
-                          TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = widget.onClickedSignUp,
-                            text: "Don't have an account?",
-                            style: TextStyle(
-                                decoration: TextDecoration.none,
-                                color: Colors.orange[700]),
+                    width: 278,
+                    margin: EdgeInsets.only(top: 30),
+                    decoration: new BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromARGB(255, 239, 238, 238)),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Container(
+                          margin: EdgeInsets.only(left: 20, right: 20),
+                          child: TextField(
+                            controller: emailController,
+                            cursorColor: Colors.white,
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: "Email",
+                                filled: true,
+                                fillColor: Color.fromARGB(68, 162, 159, 159)),
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 20),
+                        Container(
+                          margin: EdgeInsets.only(left: 20, right: 20),
+                          child: TextField(
+                            controller: PasswordController,
+                            cursorColor: Colors.white,
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: "Password",
+                                filled: true,
+                                fillColor: Color.fromARGB(68, 162, 159, 159)),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Container(
+                          margin: EdgeInsets.only(left: 20, right: 20),
+                          child: ButtonTheme(
+                            minWidth: 270,
+                            height: 50,
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.orange[700],
+                                  minimumSize: Size.fromHeight(50),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10))),
+                              icon: Icon(Icons.lock_open, size: 32),
+                              label: Text(
+                                'Login',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              onPressed: signIn,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                        Container(
+                          margin: EdgeInsets.only(left: 20, right: 20),
+                          child: ButtonTheme(
+                            minWidth: 270,
+                            height: 50,
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.orange[700],
+                                  minimumSize: Size.fromHeight(50),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10))),
+                              icon: Icon(Icons.lock_open, size: 32),
+                              label: Text(
+                                'Sign up',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SignUpWidget()));
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 15),
-                ],
-              ),
-            )
-          ]));
+                  )
+                ])),
+      );
   Future signIn() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -885,7 +929,7 @@ class MyApp extends StatelessWidget {
 class FirstPage extends StatelessWidget {
   const FirstPage({Key? key, required this.title}) : super(key: key);
   final String title;
-  final bool isLogin = true;
+  final bool isLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -962,6 +1006,34 @@ class FirstPage extends StatelessWidget {
                             builder: (context) => const FourthPage(
                                   title: "Login Page",
                                 )));
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 4),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 270,
+                height: 35.0,
+                child: RaisedButton(
+                  textColor: Colors.grey[700],
+                  color: Colors.grey[300],
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    'Register',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () {
+                    var user = FirebaseAuth.instance.currentUser?.emailVerified;
+                    user != null
+                        ? Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => HomePage()))
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignUpWidget()));
                   },
                 ),
               ),
@@ -1655,6 +1727,12 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () async {
                   await _googleSignIn.signOut();
                   FirebaseAuth.instance.signOut();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FirstPage(
+                                title: 'FirstPage',
+                              )));
                   setState(() {});
                 }),
           ],
@@ -1683,9 +1761,8 @@ class _AuthPageState extends State<AuthPage> {
   bool isLogin = true;
 
   @override
-  Widget build(BuildContext context) => isLogin
-      ? LoginWidget(onClickedSignUp: toggle)
-      : SignUpWidget(onClickedSignIn: toggle);
+  Widget build(BuildContext context) =>
+      isLogin ? LoginWidget() : SignUpWidget();
 
   void toggle() => setState(() => isLogin = !isLogin);
 }
