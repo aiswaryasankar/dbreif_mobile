@@ -168,20 +168,11 @@ class _LoginWidgetState extends State<LoginWidget> {
         password: PasswordController.text.trim(),
       );
       final user = FirebaseAuth.instance.currentUser!;
-      setData(user.email!, user.displayName!, user.photoURL!, user.uid);
+      setData(user.email!, user.displayName!, user.uid);
     } on FirebaseAuthException catch (e) {
       print(e);
 
       Utils.showSnackBar(e.message);
     }
-  }
-
-  Future<void> setData(
-      String email, String name, String photoUrl, String AuthCode) async {
-    final SharedPreferences gPref = await SharedPreferences.getInstance();
-    gPref.setString('email', email);
-    gPref.setString('name', name);
-    gPref.setString('photoUrl', photoUrl);
-    gPref.setString('authCode', AuthCode);
   }
 }

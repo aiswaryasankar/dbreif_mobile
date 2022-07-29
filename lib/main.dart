@@ -18,6 +18,13 @@ import 'package:flutter_application_1/registerPage.dart';
 import 'package:flutter_application_1/homePage.dart';
 import 'package:flutter_application_1/googleSignInPage.dart';
 
+Future<void> setData(String email, String name, String AuthCode) async {
+  final SharedPreferences gPref = await SharedPreferences.getInstance();
+  gPref.setString('email', email);
+  gPref.setString('name', name);
+  gPref.setString('authCode', AuthCode);
+}
+
 class ForgotPasswordPage extends StatefulWidget {
   @override
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
@@ -162,12 +169,28 @@ class FirstPage extends StatelessWidget {
               ),
             ),
             Container(
-              child: Text(
-                "story in seconds",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'story',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'in',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'seconds',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: Colors.orange),
+                  )
+                ],
               ),
             ),
             SizedBox(height: 15),
@@ -276,16 +299,22 @@ class FirstPage extends StatelessWidget {
             Container(
               child: Text(
                 "Debrief.AI is a news search engine based on state of",
+                style:
+                    TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
               ),
             ),
             Container(
               child: Text(
                 "the art research to search, summarie, and organize",
+                style:
+                    TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
               ),
             ),
             Container(
               child: Text(
                 "news contect across all platforms",
+                style:
+                    TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
               ),
             ),
             SizedBox(
@@ -309,13 +338,7 @@ class FirstPage extends StatelessWidget {
                         fontSize: 40.0, // insert your font size here
                         fontWeight: FontWeight.bold),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const SecondPage(title: 'Sign Up Page')));
-                  },
+                  onPressed: () {},
                 ),
               ),
             ),
@@ -344,14 +367,14 @@ class FirstPage extends StatelessWidget {
                 child: Center(
                     child: Text(
                   'Save yourself hours parsing through all the',
-                  style: TextStyle(fontSize: 17),
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                 ))),
             Container(
                 width: 700.0,
                 child: Center(
                     child: Text(
                   'articles, shows and content yourself',
-                  style: TextStyle(fontSize: 17),
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                 ))),
             SizedBox(height: 25),
             Container(
@@ -377,13 +400,7 @@ class FirstPage extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
 
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const SecondPage(title: 'Sign Up Page')));
-                  },
+                  onPressed: () {},
                 ),
               ),
             ),
@@ -423,14 +440,16 @@ class FirstPage extends StatelessWidget {
                     child: Center(
                         child: Text(
                       'Access additional relevant information from a',
-                      style: TextStyle(fontSize: 17),
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                     ))),
                 Container(
                     width: 700.0,
                     child: Center(
                         child: Text(
                       'holistic vantage point wherever you are',
-                      style: TextStyle(fontSize: 17),
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                     ))),
                 SizedBox(height: 20.0),
                 Container(
@@ -456,13 +475,7 @@ class FirstPage extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
 
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const SecondPage(title: 'Sign Up Page')));
-                      },
+                      onPressed: () {},
                     ),
                   ),
                 ),
@@ -485,20 +498,22 @@ class FirstPage extends StatelessWidget {
                     child: Center(
                         child: Text(
                       'Curate your daily news digest to your interests.',
-                      style: TextStyle(fontSize: 17),
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                     ))),
                 Container(
                     width: 700.0,
                     child: Center(
                         child: Text(
                       'Choose your preferred sources.',
-                      style: TextStyle(fontSize: 17),
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                     ))),
                 SizedBox(height: 20),
                 Container(
                     margin: EdgeInsets.only(left: 30, right: 30),
                     child: Image(image: AssetImage('assets/dbriefThree.JPG'))),
-                SizedBox(height: 100),
+                SizedBox(height: 50),
                 Container(
                   child: Text(
                     "Don't let us",
@@ -548,18 +563,25 @@ class FirstPage extends StatelessWidget {
                       ),
 
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const SecondPage(title: 'Sign Up Page')));
+                        var user =
+                            FirebaseAuth.instance.currentUser?.emailVerified;
+                        user != null
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()))
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SignUpWidget()));
                       },
                     ),
                   ),
                 ),
                 SizedBox(height: 25),
                 Container(
-                    width: 250,
+                    width: 220,
                     margin: EdgeInsets.only(left: 40, right: 40),
                     child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
                 SizedBox(height: 20),
@@ -568,10 +590,14 @@ class FirstPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text("About"),
-                      Text("FAQ"),
-                      Text("Terms"),
-                      Text("Privacy")
+                      Text("About",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text("FAQ",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text("Terms",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text("Privacy",
+                          style: TextStyle(fontWeight: FontWeight.bold))
                     ],
                   ),
                 )
@@ -581,207 +607,6 @@ class FirstPage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({Key? key, required this.title}) : super(key: key);
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-                margin: EdgeInsets.only(left: 40, right: 30),
-                child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
-            Container(
-              width: 278,
-              margin: EdgeInsets.only(top: 30),
-              decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 239, 238, 238)),
-              child: Column(
-                children: [
-                  SizedBox(height: 20),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintText: "Full Name",
-                        filled: true,
-                        fillColor: Color.fromARGB(68, 162, 159, 159),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintText: "Email",
-                        filled: true,
-                        fillColor: Color.fromARGB(68, 162, 159, 159),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintText: "Password",
-                        filled: true,
-                        fillColor: Color.fromARGB(68, 162, 159, 159),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        hintText: "Confirm Passoword",
-                        filled: true,
-                        fillColor: Color.fromARGB(68, 162, 159, 159),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  ButtonTheme(
-                    minWidth: 240,
-                    height: 50.0,
-                    child: RaisedButton(
-                      color: Colors.orange[700],
-                      disabledColor: Colors.orange[700],
-                      textColor: Colors.white,
-                      disabledTextColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Text('Register'),
-                      onPressed: null,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const ThirdPage(title: 'Sign In Page')));
-                    },
-                    style: TextButton.styleFrom(
-                      primary: Colors.orange,
-                    ),
-                    child: const Text('Already have an account?'),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ThirdPage extends StatelessWidget {
-  const ThirdPage({Key? key, required this.title}) : super(key: key);
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: Container(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                    margin: EdgeInsets.only(left: 40, right: 30),
-                    child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
-                Container(
-                    width: 278,
-                    margin: EdgeInsets.only(top: 30),
-                    decoration: new BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color.fromARGB(255, 239, 238, 238)),
-                    child: Column(children: [
-                      SizedBox(height: 20),
-                      Container(
-                        margin: EdgeInsets.only(left: 20, right: 20),
-                        child: TextField(
-                            decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: "Email",
-                          filled: true,
-                          fillColor: Color.fromARGB(68, 162, 159, 159),
-                        )),
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        margin: EdgeInsets.only(left: 20, right: 20),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: "Password",
-                            filled: true,
-                            fillColor: Color.fromARGB(68, 162, 159, 159),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        margin: EdgeInsets.only(left: 20, right: 20),
-                        child: ButtonTheme(
-                          minWidth: 270,
-                          height: 50.0,
-                          child: RaisedButton(
-                            color: Colors.orange[700],
-                            disabledColor: Colors.orange[700],
-                            textColor: Colors.white,
-                            disabledTextColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Text('Login'),
-                            onPressed: null,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const SecondPage(title: 'Sign Up Page')));
-                        },
-                        style: TextButton.styleFrom(
-                          primary: Colors.orange,
-                        ),
-                        child: const Text("Don't have an account?"),
-                      ),
-                    ]))
-              ]),
-        ));
   }
 }
 

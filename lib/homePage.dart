@@ -27,7 +27,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String? gEmail;
   String? gName;
-  String? gPhoto;
   String? gAuthCode;
 
   @override
@@ -63,10 +62,6 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(height: 20),
             Container(
-              child: gPhoto == null ? Text('No Data') : Image.network(gPhoto!),
-            ),
-            SizedBox(height: 20),
-            Container(
               child: gAuthCode == null ? Text('No Data') : Text(gAuthCode!),
             ),
             SizedBox(height: 15),
@@ -95,9 +90,7 @@ class _HomePageState extends State<HomePage> {
     final SharedPreferences gPref = await SharedPreferences.getInstance();
     gEmail = gPref.getString('email');
     gName = gPref.getString('name');
-    gPhoto = gPref.getString('photoUrl');
     gAuthCode = gPref.getString('authCode');
-
     setState(() {});
   }
 }

@@ -217,6 +217,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       );
       final user = FirebaseAuth.instance.currentUser!;
       postdata(fullNameController.text, user.uid);
+      user.updateDisplayName(fullNameController.text);
+
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => VerifyEmailPage()));
     } on FirebaseAuthException catch (e) {
