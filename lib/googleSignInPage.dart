@@ -97,7 +97,7 @@ class _GoogleSignInAppState extends State<GoogleSignInApp> {
                         onPressed: user == null
                             ? null
                             : () async {
-                                setData(user.email, user.displayName!,
+                                setUser(user.email, user.displayName!,
                                     user.photoUrl!, user.serverAuthCode!);
 
                                 Navigator.push(
@@ -109,12 +109,21 @@ class _GoogleSignInAppState extends State<GoogleSignInApp> {
             )));
   }
 
-  Future<void> setData(
-      String email, String name, String photoUrl, String AuthCode) async {
-    final SharedPreferences gPref = await SharedPreferences.getInstance();
-    gPref.setString('email', email);
-    gPref.setString('name', name);
-    gPref.setString('photoUrl', photoUrl);
-    gPref.setString('authCode', AuthCode);
+  Future<void> setUser(
+      String email, String Fullname, String photoUrl, String AuthCode) async {
+    user["FirebaseAuthID"] = AuthCode;
+    user["Email"] = email;
+
+    var names = Fullname.split(' ');
+    var lastName;
+    String FirstName = names[0];
+    if (FirstName == Fullname) {
+      lastName = "";
+    } else {
+      lastName = names[1];
+    }
+
+    user["FirstName"] = FirstName;
+    user["LastName"] = lastName;
   }
 }

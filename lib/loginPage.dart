@@ -128,23 +128,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 12),
+                        SizedBox(height: 5),
                         Container(
                           margin: EdgeInsets.only(left: 20, right: 20),
                           child: ButtonTheme(
                             minWidth: 270,
                             height: 50,
-                            child: ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.orange[700],
-                                  minimumSize: Size.fromHeight(50),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              icon: Icon(Icons.lock_open, size: 32),
-                              label: Text(
-                                'Sign up',
-                                style: TextStyle(fontSize: 18),
-                              ),
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                  primary: Colors.orange,
+                                  textStyle:
+                                      TextStyle(fontWeight: FontWeight.w900)),
+                              child: Text('Dont have an account?'),
                               onPressed: () {
                                 Navigator.push(
                                     context,
@@ -155,7 +150,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 15),
+                        SizedBox(height: 8),
                       ],
                     ),
                   )
@@ -169,10 +164,39 @@ class _LoginWidgetState extends State<LoginWidget> {
       );
       final user = FirebaseAuth.instance.currentUser!;
       setData(user.email!, user.displayName!, user.uid);
+      getUser(user.displayName!, user.uid);
     } on FirebaseAuthException catch (e) {
       print(e);
 
       Utils.showSnackBar(e.message);
     }
+  }
+
+  getUser(String fullName, String authID) async {
+    var names = fullName.split(' ');
+    var lastName;
+    String firstName = names[0];
+    if (firstName == fullName) {
+      lastName = "";
+    } else {
+      lastName = names[1];
+    }
+
+    var response = await http.post(
+        Uri.parse(
+            "https://ddbrief.com/getUser/?Content-Type=application/json&Accept=application/json,text/plain,/"),
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json"
+        },
+        body: jsonEncode({
+          "firebaseAuthId": authID,
+        }));
+
+    var resultingString =
+        response.body.substring(11, response.body.length - 19);
+
+    String resulting = resultingString.replaceAll(r'\"', '"');
+    user = jsonDecode(resulting);
   }
 }

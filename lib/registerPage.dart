@@ -170,24 +170,18 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                     }),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 5),
                             Container(
                               margin: EdgeInsets.only(left: 20, right: 20),
                               child: ButtonTheme(
                                 minWidth: 270,
                                 height: 50,
-                                child: ElevatedButton.icon(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.orange[700],
-                                      minimumSize: Size.fromHeight(50),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10))),
-                                  icon: Icon(Icons.lock_open, size: 32),
-                                  label: Text(
-                                    'Log in',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      primary: Colors.orange,
+                                      textStyle: TextStyle(
+                                          fontWeight: FontWeight.w900)),
+                                  child: Text('Already have an account?'),
                                   onPressed: () {
                                     Navigator.push(
                                         context,
@@ -200,7 +194,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 8),
                           ],
                         ),
                       ),
@@ -240,17 +234,25 @@ class _SignUpWidgetState extends State<SignUpWidget> {
     }
 
     var response = await http.post(
-        Uri.parse("https://62da7ba3e56f6d82a762c9bf.mockapi.io/test"),
+        Uri.parse(
+            "https://ddbrief.com/createUser/?Content-Type=application/json&Accept=application/json,text/plain,/"),
         headers: {
           "Content-type": "application/json",
           "Accept": "application/json"
         },
         body: jsonEncode({
-          "FirebaseAuthID": authID,
-          "FirstName": firstName,
-          "LastName": lastName,
-          "Email": emailController.text
+          "user": {
+            "FirebaseAuthID": authID,
+            "FirstName": firstName,
+            "LastName": lastName,
+            "Email": emailController.text
+          }
         }));
     print(response.body);
+
+    user["FirebaseAuthID"] = authID;
+    user["FirstName"] = firstName;
+    user["LastName"] = lastName;
+    user["Email"] = emailController.text;
   }
 }

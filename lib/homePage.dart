@@ -65,6 +65,16 @@ class _HomePageState extends State<HomePage> {
               child: gAuthCode == null ? Text('No Data') : Text(gAuthCode!),
             ),
             SizedBox(height: 15),
+            Container(
+                child: Column(
+              children: [
+                Text(user['FirebaseAuthID']),
+                Text(user['FirstName']),
+                Text(user['LastName']),
+                Text(user['Email']),
+              ],
+            )),
+            SizedBox(height: 15),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     fixedSize: Size(130, 20), primary: Colors.red),

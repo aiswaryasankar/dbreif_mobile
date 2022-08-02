@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,9 @@ import 'package:flutter_application_1/loginPage.dart';
 import 'package:flutter_application_1/registerPage.dart';
 import 'package:flutter_application_1/homePage.dart';
 import 'package:flutter_application_1/googleSignInPage.dart';
+
+var user = new Map();
+var ans;
 
 Future<void> setData(String email, String name, String AuthCode) async {
   final SharedPreferences gPref = await SharedPreferences.getInstance();
