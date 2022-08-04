@@ -218,7 +218,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
     } on FirebaseAuthException catch (e) {
       print(e);
 
-      Utils.showSnackBar(e.message);
+      Utils.showSnackBar(e.message! +
+          " If you tried signing in with Google before, Please register your email using Google");
     }
   }
 

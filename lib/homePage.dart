@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    setState(() {});
     super.initState();
     getData();
   }
@@ -40,9 +41,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sign in Success'),
-      ),
       body: Padding(
         padding: EdgeInsets.all(32),
         child: Column(
@@ -101,6 +99,24 @@ class _HomePageState extends State<HomePage> {
     gEmail = gPref.getString('email');
     gName = gPref.getString('name');
     gAuthCode = gPref.getString('authCode');
+
+    var response = await http.post(
+        Uri.parse(
+            "https://ddbrief.com/getUser/?Content-Type=application/json&Accept=application/json,text/plain,/"),
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json"
+        },
+        body: jsonEncode({
+          "firebaseAuthId": gAuthCode,
+        }));
+
+    var resultingString =
+        response.body.substring(11, response.body.length - 19);
+
+    String resulting = resultingString.replaceAll(r'\"', '"');
+    user = jsonDecode(resulting);
+
     setState(() {});
   }
 }

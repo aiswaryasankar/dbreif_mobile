@@ -291,10 +291,14 @@ class FirstPage extends StatelessWidget {
                   ),
                   label: Text('Sign in With Google'),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const GoogleSignInApp()));
+                    var user = FirebaseAuth.instance.currentUser?.emailVerified;
+                    user != null
+                        ? Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => HomePage()))
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const GoogleSignInApp()));
                   },
                 ),
               ),
