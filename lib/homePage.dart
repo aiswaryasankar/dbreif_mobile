@@ -29,6 +29,8 @@ class _HomePageState extends State<HomePage> {
   String? gName;
   String? gAuthCode;
 
+  final searchController = TextEditingController();
+
   @override
   void initState() {
     setState(() {});
@@ -41,10 +43,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(32),
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Signed in as',
@@ -66,10 +66,10 @@ class _HomePageState extends State<HomePage> {
             Container(
                 child: Column(
               children: [
-                Text(user['FirebaseAuthID']),
-                Text(user['FirstName']),
-                Text(user['LastName']),
-                Text(user['Email']),
+                // Text(user['FirebaseAuthID']),
+                // Text(user['FirstName']),
+                // Text(user['LastName']),
+                // Text(user['Email']),
               ],
             )),
             SizedBox(height: 15),
@@ -88,6 +88,550 @@ class _HomePageState extends State<HomePage> {
                               )));
                   setState(() {});
                 }),
+            Container(
+                child: const Text(
+                    "----------------------------------------------------------------------------------------------")),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: TextField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    filled: true,
+                    fillColor: Colors.grey[350],
+                    labelText: "Enter a keyword or paste an article link"),
+                cursorColor: Colors.green,
+                controller: searchController,
+                textInputAction: TextInputAction.next,
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                    height: MediaQuery.of(context).size.height / 1000),
+              ),
+            ),
+            SizedBox(height: 25),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 20),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Image.asset(
+                      'assets/dbriefLogoSolo.JPG',
+                      scale: 0.7,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 155),
+                Container(
+                  child: ButtonTheme(
+                    minWidth: 40,
+                    height: 40,
+                    child: RaisedButton(
+                      padding: EdgeInsets.only(left: 5, right: 5),
+                      color: Colors.grey[300],
+                      //disabledColor: Colors.orange[700],
+                      textColor: Colors.grey[600],
+                      //disabledTextColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.black12.withOpacity(0.5),
+                      ),
+
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+                SizedBox(width: 0),
+                ButtonTheme(
+                  minWidth: 60,
+                  height: 60,
+                  child: Container(
+                    child: TextButton(
+                      child: Icon(
+                        Icons.person_pin,
+                        color: Colors.black.withOpacity(0.1),
+                        size: 80,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 50),
+            Container(
+                margin: EdgeInsets.only(left: 20),
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Second gentleman Doug Emhoff tests positive for the coronavirus',
+                      overflow: TextOverflow.clip,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 23),
+                    ))),
+            SizedBox(height: 20),
+            Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(left: 20, right: 20),
+                decoration: new BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromARGB(255, 239, 238, 238)),
+                child: Column(children: [
+                  SizedBox(height: 20),
+                  Container(
+                    width: MediaQuery.of(context).size.width - 80,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(
+                            "https://www.whitehouse.gov/wp-content/uploads/2021/04/P20210303AS-1901-cropped.jpg?resize=768,576"),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                      margin: EdgeInsets.only(left: 20, right: 20),
+                      child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Hey Joe Biden, what would be the long-term effect in the United States of what you're doing? No idea. Dont't have to think about the future now, when everything is suddenly at stake, There's never been recklessness at this level in the White House and yes, that includes the last president who was often attacked for being reckless. Nothing he said compares to this. Fox's Peter Doocy asked for clarification and response. Joe Biden revealed that he is completely unaware that his staff has been continously updating American policy all week as he changes it on the fly. Watch Joe Biden:",
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 18),
+                          ))),
+                  SizedBox(height: 25),
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        child: ButtonTheme(
+                          minWidth:
+                              (MediaQuery.of(context).size.width - 40) / 2 - 40,
+                          height: 35.0,
+                          child: RaisedButton(
+                            color: Colors.orange[700],
+                            //disabledColor: Colors.orange[700],
+                            textColor: Colors.white,
+                            //disabledTextColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text(
+                              'Following',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0, // insert your font size here
+                                  fontWeight: FontWeight.bold),
+                            ),
+
+                            onPressed: () {},
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        child: ButtonTheme(
+                          minWidth:
+                              (MediaQuery.of(context).size.width - 40) / 2 - 40,
+                          height: 35.0,
+                          child: RaisedButton(
+                            color: Colors.grey[300],
+                            //disabledColor: Colors.orange[700],
+                            textColor: Colors.grey[600],
+                            //disabledTextColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text(
+                              'Share',
+                              style: TextStyle(
+                                  fontSize: 20.0, // insert your font size here
+                                  fontWeight: FontWeight.bold),
+                            ),
+
+                            onPressed: () {},
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: Wrap(
+                        children: [
+                          Container(
+                            child: Text(
+                              "This ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "is ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "an ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "auto-generated ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "summary ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "from ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "articles ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "all ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "over ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "the ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "internet ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "so ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "you ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "don't ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "miss ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              "a thing. ",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 0.1),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.black.withOpacity(0.6),
+                                        width: 0.8))),
+                            child: RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Learn more',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.grey,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      print(3);
+                                    })
+                            ])),
+                          )
+                        ],
+                      )),
+                ])),
+            SizedBox(height: 20),
+            Row(children: [
+              Container(
+                margin: EdgeInsets.only(left: 16),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: ButtonTheme(
+                    minWidth: 0,
+                    height: 30,
+                    child: RaisedButton(
+                      padding: EdgeInsets.only(left: 8, right: 8),
+                      color: Colors.grey[300],
+                      //disabledColor: Colors.orange[700],
+                      textColor: Colors.grey[600],
+                      //disabledTextColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Icon(
+                        Icons.safety_check,
+                        size: 20,
+                      ),
+
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      child: Text(
+                    'Facts',
+                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 23),
+                  )),
+                  Container(
+                    child: Text(
+                      "Key information from trusted sources.",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ]),
+            SizedBox(height: 15),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 48),
+                  child: ButtonTheme(
+                    minWidth: 0,
+                    height: 9.0,
+                    child: RaisedButton(
+                      padding: EdgeInsets.only(left: 7, right: 7),
+                      color: Colors.grey[300],
+                      //disabledColor: Colors.orange[700],
+                      textColor: Colors.grey[700],
+                      //disabledTextColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Text(
+                        '1',
+                        style: TextStyle(
+                            fontSize: 22.0, // insert your font size here
+                            fontWeight: FontWeight.w500),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+                SizedBox(width: 15),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 20),
+                        child: Text(
+                          'Presiden Joe Biden: What you need to know Coronavirus: White House must go further on new pandemic response, say former Biden advisers, outside expers Fact checker: The false and misleading claims Biden made during his first 100 days in office The Biden cabiner: Who has been selected Biden appointess: Who is filling key roles',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 18),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      //Text('Washington Post' + Icon(Icons.abc))
+
+                      Container(
+                        child: Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: TextButton.icon(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.logout,
+                              color: Colors.orange,
+                            ),
+                            label: Text(
+                              "Washington Post",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.orange),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 48),
+                  child: ButtonTheme(
+                    minWidth: 0,
+                    height: 9.0,
+                    child: RaisedButton(
+                      padding: EdgeInsets.only(left: 7, right: 7),
+                      color: Colors.grey[300],
+                      //disabledColor: Colors.orange[700],
+                      textColor: Colors.grey[700],
+                      //disabledTextColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Text(
+                        '2',
+                        style: TextStyle(
+                            fontSize: 22.0, // insert your font size here
+                            fontWeight: FontWeight.w500),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+                SizedBox(width: 15),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 20),
+                        child: Text(
+                          'Joe Biden gets upset when you gquote Joe Biden to Joe Biden, "Bongino said, adding that it may indeed be the time to consider replacing Biden in the line of sucession -- while also contemplating the competency of the next-in-line, Vice Presiden Kamala Harris',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 18),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      //Text('Washington Post' + Icon(Icons.abc))
+
+                      Container(
+                        child: Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: TextButton.icon(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.logout,
+                              color: Colors.orange,
+                            ),
+                            label: Text(
+                              "Charles creitz",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.orange),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

@@ -56,6 +56,8 @@ dependencies:
   http: ^0.13.4
 
   shared_preferences: ^2.0.15
+
+  url_launcher: ^6.1.5
   
 
 dev_dependencies:
@@ -89,7 +91,7 @@ flutter:
     - assets/dbriefThree.JPG
     - assets/dbriefLast.JPG
     - assets/google.JPG
-
+    - assets/dbriefLogoSolo.JPG
   # An image asset can refer to one qw2aseeeeeeeeeeeeeeeeeee3or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
