@@ -99,6 +99,7 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(15)),
                     filled: true,
                     fillColor: Colors.grey[350],
+                    //The Search Bar
                     labelText: "Enter a keyword or paste an article link"),
                 cursorColor: Colors.green,
                 controller: searchController,
@@ -131,9 +132,8 @@ class _HomePageState extends State<HomePage> {
                     child: RaisedButton(
                       padding: EdgeInsets.only(left: 5, right: 5),
                       color: Colors.grey[300],
-                      //disabledColor: Colors.orange[700],
                       textColor: Colors.grey[600],
-                      //disabledTextColor: Colors.white,
+                      //Quit Icon/Button
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)),
                       child: Icon(
@@ -146,6 +146,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(width: 0),
+                //Person Icon/Button
                 ButtonTheme(
                   minWidth: 60,
                   height: 60,
@@ -163,6 +164,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             SizedBox(height: 50),
+            //title container
             Container(
                 margin: EdgeInsets.only(left: 20),
                 child: Align(
@@ -182,6 +184,7 @@ class _HomePageState extends State<HomePage> {
                     color: Color.fromARGB(255, 239, 238, 238)),
                 child: Column(children: [
                   SizedBox(height: 20),
+                  //image container
                   Container(
                     width: MediaQuery.of(context).size.width - 80,
                     height: 200,
@@ -195,6 +198,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(height: 20),
+                  //summary container
                   Container(
                       margin: EdgeInsets.only(left: 20, right: 20),
                       child: Align(
@@ -208,6 +212,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: 25),
                   Row(
                     children: [
+                      //following button
                       Container(
                         margin: EdgeInsets.only(left: 20, right: 20),
                         child: ButtonTheme(
@@ -216,9 +221,7 @@ class _HomePageState extends State<HomePage> {
                           height: 35.0,
                           child: RaisedButton(
                             color: Colors.orange[700],
-                            //disabledColor: Colors.orange[700],
                             textColor: Colors.white,
-                            //disabledTextColor: Colors.white,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             child: Text(
@@ -228,11 +231,11 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 18.0, // insert your font size here
                                   fontWeight: FontWeight.bold),
                             ),
-
                             onPressed: () {},
                           ),
                         ),
                       ),
+                      //share button
                       Container(
                         margin: EdgeInsets.only(left: 20, right: 20),
                         child: ButtonTheme(
@@ -241,9 +244,7 @@ class _HomePageState extends State<HomePage> {
                           height: 35.0,
                           child: RaisedButton(
                             color: Colors.grey[300],
-                            //disabledColor: Colors.orange[700],
                             textColor: Colors.grey[600],
-                            //disabledTextColor: Colors.white,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             child: Text(
@@ -252,7 +253,6 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 20.0, // insert your font size here
                                   fontWeight: FontWeight.bold),
                             ),
-
                             onPressed: () {},
                           ),
                         ),
@@ -260,6 +260,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   SizedBox(height: 10),
+                  //learn more button / Hyperlink
                   Container(
                       padding: EdgeInsets.only(left: 20, right: 20),
                       child: Wrap(
@@ -451,6 +452,7 @@ class _HomePageState extends State<HomePage> {
                 ])),
             SizedBox(height: 20),
             Row(children: [
+              //unknown Icon
               Container(
                 margin: EdgeInsets.only(left: 16),
                 child: Align(
@@ -461,9 +463,8 @@ class _HomePageState extends State<HomePage> {
                     child: RaisedButton(
                       padding: EdgeInsets.only(left: 8, right: 8),
                       color: Colors.grey[300],
-                      //disabledColor: Colors.orange[700],
                       textColor: Colors.grey[600],
-                      //disabledTextColor: Colors.white,
+                     
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       child: Icon(
@@ -510,15 +511,15 @@ class _HomePageState extends State<HomePage> {
                     child: RaisedButton(
                       padding: EdgeInsets.only(left: 7, right: 7),
                       color: Colors.grey[300],
-                      //disabledColor: Colors.orange[700],
+                    
                       textColor: Colors.grey[700],
-                      //disabledTextColor: Colors.white,
+                   
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                       child: Text(
                         '1',
                         style: TextStyle(
-                            fontSize: 22.0, // insert your font size here
+                            fontSize: 22.0, 
                             fontWeight: FontWeight.w500),
                       ),
                       onPressed: () {},
@@ -526,10 +527,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(width: 15),
+              
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //Fact #1
                       Container(
                         margin: EdgeInsets.only(right: 20),
                         child: Text(
@@ -539,8 +542,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: 5),
-                      //Text('Washington Post' + Icon(Icons.abc))
-
+                      
+                      //Source hyperlink #1
                       Container(
                         child: Directionality(
                           textDirection: TextDirection.rtl,
@@ -577,9 +580,9 @@ class _HomePageState extends State<HomePage> {
                     child: RaisedButton(
                       padding: EdgeInsets.only(left: 7, right: 7),
                       color: Colors.grey[300],
-                      //disabledColor: Colors.orange[700],
+                      
                       textColor: Colors.grey[700],
-                      //disabledTextColor: Colors.white,
+                      
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                       child: Text(
@@ -597,6 +600,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //Fact #2
                       Container(
                         margin: EdgeInsets.only(right: 20),
                         child: Text(
@@ -606,8 +610,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: 5),
-                      //Text('Washington Post' + Icon(Icons.abc))
-
+                      
+                      //Source #2
                       Container(
                         child: Directionality(
                           textDirection: TextDirection.rtl,
