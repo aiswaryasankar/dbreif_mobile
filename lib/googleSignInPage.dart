@@ -48,11 +48,14 @@ class _GoogleSignInAppState extends State<GoogleSignInApp> {
           children: [
             Container(
                 width: 135,
-                margin: EdgeInsets.only(bottom: 110),
+                //margin: EdgeInsets.only(bottom: 110),
                 child: Image.asset(
                   'assets/google.JPG',
                   scale: 1.5,
                 )),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 8,
+            ),
             Container(
               width: 278,
               decoration: new BoxDecoration(

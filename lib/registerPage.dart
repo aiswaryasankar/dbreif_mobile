@@ -50,9 +50,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 120),
+                      SizedBox(height: MediaQuery.of(context).size.height / 6),
                       Container(
-                        margin: EdgeInsets.only(left: 40, right: 30),
+                        margin: EdgeInsets.only(left: 40, right: 40),
                         child:
                             Image(image: AssetImage('assets/dbriefLogo.JPG')),
                       ),

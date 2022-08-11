@@ -65,9 +65,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 200),
+                  SizedBox(height: MediaQuery.of(context).size.height / 4),
                   Container(
-                      margin: EdgeInsets.only(left: 40, right: 30),
+                      margin: EdgeInsets.only(left: 40, right: 40),
                       child: Image(image: AssetImage('assets/dbriefLogo.JPG'))),
                   Container(
                     width: 278,

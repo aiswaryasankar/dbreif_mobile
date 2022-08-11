@@ -31,6 +31,38 @@ class _HomePageState extends State<HomePage> {
 
   final searchController = TextEditingController();
 
+  var factsList = [
+    [
+      "Presiden Joe Biden: What you need to know Coronavirus: White House must go further on new pandemic response, say former Biden advisers, outside expers Fact checker: The false and misleading claims Biden made during his first 100 days in office The Biden cabiner: Who has been selected Biden appointess: Who is filling key roles",
+      "Washington Post"
+    ],
+    [
+      'Joe Biden gets upset when you gquote Joe Biden to Joe Biden, "Bongino said, adding that it may indeed be the time to consider replacing Biden in the line of sucession -- while also contemplating the competency of the next-in-line, Vice Presiden Kamala Harris',
+      "Jakarta Post"
+    ]
+  ];
+  var timelineList = [
+    [
+      ["July 30"],
+      [
+        "Rep. Adriano Espailat (D-NY) writes, prior to the covid-19 pandemic, 96 percent of DACA recipients were employed or enrolled in school, slowly but surely entering our workforce pipleine to become our future educators, helath care professionals, public servans and community leaders. Nearly 25 percent of recipients also have children who are U.S citizens...",
+        "Adriano Espaillat, The Hill"
+      ],
+      [
+        "Democrats have advocated a pathway to citizenship for illegal immigrants for decades now, but never have they said that we must create one primarily as a budgetary matter -- as if the status of illegal immigrants is a question comparable to the level of Medicare hospital reimbursements or unemployment benefits...",
+        "The Editors, National Review"
+      ]
+    ],
+    [
+      ["July 29"],
+      [
+        "The democrats wants to include a massive amnesty in that legislation, '[stated] Sen. Tom Cotton (R-Ark.). 'That will simply act as a bigger magnet for more illegal immigration into this country.' This is nonsense. The population eligible for legalization would likely be restricted to people who've already been here.",
+        "Catharine Lampell, Washington Post"
+      ],
+    ]
+  ];
+
+  int factCounter = 0;
   @override
   void initState() {
     setState(() {});
@@ -464,14 +496,12 @@ class _HomePageState extends State<HomePage> {
                       padding: EdgeInsets.only(left: 8, right: 8),
                       color: Colors.grey[300],
                       textColor: Colors.grey[600],
-                     
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       child: Icon(
                         Icons.safety_check,
                         size: 20,
                       ),
-
                       onPressed: () {},
                     ),
                   ),
@@ -511,23 +541,19 @@ class _HomePageState extends State<HomePage> {
                     child: RaisedButton(
                       padding: EdgeInsets.only(left: 7, right: 7),
                       color: Colors.grey[300],
-                    
                       textColor: Colors.grey[700],
-                   
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                       child: Text(
                         '1',
                         style: TextStyle(
-                            fontSize: 22.0, 
-                            fontWeight: FontWeight.w500),
+                            fontSize: 22.0, fontWeight: FontWeight.w500),
                       ),
                       onPressed: () {},
                     ),
                   ),
                 ),
                 SizedBox(width: 15),
-              
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -542,7 +568,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: 5),
-                      
+
                       //Source hyperlink #1
                       Container(
                         child: Directionality(
@@ -580,9 +606,7 @@ class _HomePageState extends State<HomePage> {
                     child: RaisedButton(
                       padding: EdgeInsets.only(left: 7, right: 7),
                       color: Colors.grey[300],
-                      
                       textColor: Colors.grey[700],
-                      
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                       child: Text(
@@ -610,7 +634,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: 5),
-                      
+
                       //Source #2
                       Container(
                         child: Directionality(
@@ -635,7 +659,173 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ],
-            )
+            ),
+            for (var i = 0; i < factsList.length; i++) ...[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 48),
+                    child: ButtonTheme(
+                      minWidth: 0,
+                      height: 9.0,
+                      child: RaisedButton(
+                        padding: EdgeInsets.only(left: 7, right: 7),
+                        color: Colors.grey[300],
+                        textColor: Colors.grey[700],
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Text(
+                          (i + 1).toString(),
+                          style: TextStyle(
+                              fontSize: 22.0, fontWeight: FontWeight.w500),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //Fact #1
+                        Container(
+                          margin: EdgeInsets.only(right: 20),
+                          child: Text(
+                            factsList[i][0],
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 18),
+                          ),
+                        ),
+                        SizedBox(height: 5),
+
+                        //Source hyperlink #1
+                        Container(
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: TextButton.icon(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.logout,
+                                color: Colors.orange,
+                              ),
+                              label: Text(
+                                factsList[i][1],
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.orange),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+            SizedBox(height: 10),
+
+            for (var i = 0; i < timelineList.length; i++) ...[
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                      margin: EdgeInsets.only(left: 70),
+                      child: Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Column(children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  timelineList[i][0][0].toString(),
+                                  style: TextStyle(
+                                      fontSize: 23,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            for (var j = 0;
+                                j < timelineList[i].length - 1;
+                                j++) ...[
+                              Row(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      // margin: EdgeInsets.only(left: 20, right: 20),
+                                      child: ButtonTheme(
+                                        minWidth: 40.0,
+                                        height: 40.0,
+                                        child: RaisedButton(
+                                          color: Colors.orange[700],
+                                          //disabledColor: Colors.orange[700],
+                                          textColor: Colors.white,
+                                          //disabledTextColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Text(
+                                            (j + 1).toString(),
+                                            style: TextStyle(
+                                                fontSize:
+                                                    20.0, // insert your font size here
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width /
+                                            2 +
+                                        MediaQuery.of(context).size.width / 10,
+                                    decoration: new BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color:
+                                            Color.fromARGB(255, 239, 238, 238)),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                            margin: EdgeInsets.only(
+                                                top: 10, left: 20, right: 20),
+                                            child: Text(
+                                              timelineList[i][j + 1][0]
+                                                  .toString(),
+                                              overflow: TextOverflow.clip,
+                                            )),
+                                        SizedBox(height: 10),
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Container(
+                                            margin: EdgeInsets.only(left: 20),
+                                            child: Text(
+                                              timelineList[i][j + 1][1]
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  color: Colors.orange,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 20),
+                            ],
+                            SizedBox(height: 20),
+                          ]))))
+            ],
+
+            SizedBox(height: 20),
           ],
         ),
       ),
@@ -665,6 +855,11 @@ class _HomePageState extends State<HomePage> {
     String resulting = resultingString.replaceAll(r'\"', '"');
     user = jsonDecode(resulting);
 
+    setState(() {});
+  }
+
+  incrementFactCounter() {
+    factCounter += 1;
     setState(() {});
   }
 }
