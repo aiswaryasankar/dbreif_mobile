@@ -20,6 +20,7 @@ import 'package:flutter_application_1/homePage.dart';
 import 'package:flutter_application_1/googleSignInPage.dart';
 
 var user = new Map();
+var topicData = new Map();
 var ans;
 
 Future<void> setData(String email, String name, String AuthCode) async {
@@ -268,6 +269,26 @@ class FirstPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const SignUpWidget()));
+                  },
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 270,
+                height: 35.0,
+                child: RaisedButton(
+                  textColor: Colors.grey[700],
+                  color: Colors.grey[300],
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    'getTopic',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () {
+                    getTopicPage('Text');
                   },
                 ),
               ),
@@ -631,4 +652,28 @@ class _AuthPageState extends State<AuthPage> {
       isLogin ? LoginWidget() : SignUpWidget();
 
   void toggle() => setState(() => isLogin = !isLogin);
+}
+
+getTopicPage(String text) async {
+  var response = await http.post(
+      Uri.parse(
+          "http://infra.eba-ydmy6xs3.us-west-2.elasticbeanstalk.com/getTopicPage/?Content-Type=application/json&Accept=application/json, text/plain, /"),
+      headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json"
+      },
+      body: jsonEncode({
+        "text": text,
+      }));
+
+  var resultingString = response.body.substring(18, response.body.length - 19);
+
+  String raw = resultingString.replaceAll(r'\\\"', "'");
+  String resulting = raw.replaceAll(r'\"', '"');
+
+  topicData = jsonDecode(resulting);
+  print(topicData['Facts'].length);
+  print(topicData['Facts'][0]);
+  print(topicData["Facts"][0]["Quote"]["Text"]);
+  //print(resultingString);
 }

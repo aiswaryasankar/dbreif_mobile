@@ -193,7 +193,8 @@ class _LoginWidgetState extends State<LoginWidget> {
         body: jsonEncode({
           "firebaseAuthId": authID,
         }));
-
+    var x = response.body;
+    print(x);
     var resultingString =
         response.body.substring(11, response.body.length - 19);
 

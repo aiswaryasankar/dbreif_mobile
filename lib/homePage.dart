@@ -124,6 +124,25 @@ class _HomePageState extends State<HomePage> {
                 child: const Text(
                     "----------------------------------------------------------------------------------------------")),
             Container(
+              child: ButtonTheme(
+                minWidth: 40,
+                height: 40,
+                child: RaisedButton(
+                  padding: EdgeInsets.only(left: 5, right: 5),
+                  color: Colors.grey[300],
+                  textColor: Colors.grey[600],
+                  //Quit Icon/Button
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Text('getTopicPage'),
+
+                  onPressed: () {
+                    getTopicPage('Text');
+                  },
+                ),
+              ),
+            ),
+            Container(
               margin: EdgeInsets.only(left: 20, right: 20),
               child: TextField(
                 decoration: InputDecoration(
@@ -201,12 +220,19 @@ class _HomePageState extends State<HomePage> {
                 margin: EdgeInsets.only(left: 20),
                 child: Align(
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      'Second gentleman Doug Emhoff tests positive for the coronavirus',
-                      overflow: TextOverflow.clip,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w900, fontSize: 23),
-                    ))),
+                    child: topicData == null
+                        ? Text(
+                            'Second gentleman Doug Emhoff tests positive for the coronavirus',
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900, fontSize: 23),
+                          )
+                        : Text(
+                            topicData['Title'],
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900, fontSize: 23),
+                          ))),
             SizedBox(height: 20),
             Container(
                 width: MediaQuery.of(context).size.width,
@@ -223,10 +249,11 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(
-                            "https://www.whitehouse.gov/wp-content/uploads/2021/04/P20210303AS-1901-cropped.jpg?resize=768,576"),
-                      ),
+                          fit: BoxFit.fill,
+                          image: topicData == null
+                              ? NetworkImage(
+                                  "https://www.whitehouse.gov/wp-content/uploads/2021/04/P20210303AS-1901-cropped.jpg?resize=768,576")
+                              : NetworkImage(topicData['ImageURL'])),
                     ),
                   ),
                   SizedBox(height: 20),
@@ -235,12 +262,15 @@ class _HomePageState extends State<HomePage> {
                       margin: EdgeInsets.only(left: 20, right: 20),
                       child: Align(
                           alignment: Alignment.topLeft,
-                          child: Text(
-                            "Hey Joe Biden, what would be the long-term effect in the United States of what you're doing? No idea. Dont't have to think about the future now, when everything is suddenly at stake, There's never been recklessness at this level in the White House and yes, that includes the last president who was often attacked for being reckless. Nothing he said compares to this. Fox's Peter Doocy asked for clarification and response. Joe Biden revealed that he is completely unaware that his staff has been continously updating American policy all week as he changes it on the fly. Watch Joe Biden:",
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 18),
-                          ))),
+                          child: topicData == null
+                              ? Text(
+                                  "Hey Joe Biden, what would be the long-term effect in the United States of what you're doing? No idea. Dont't have to think about the future now, when everything is suddenly at stake, There's never been recklessness at this level in the White House and yes, that includes the last president who was often attacked for being reckless. Nothing he said compares to this. Fox's Peter Doocy asked for clarification and response. Joe Biden revealed that he is completely unaware that his staff has been continously updating American policy all week as he changes it on the fly. Watch Joe Biden:",
+                                  overflow: TextOverflow.clip,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18),
+                                )
+                              : Text(topicData['MDSSummary']))),
                   SizedBox(height: 25),
                   Row(
                     children: [
@@ -530,137 +560,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ]),
             SizedBox(height: 15),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 48),
-                  child: ButtonTheme(
-                    minWidth: 0,
-                    height: 9.0,
-                    child: RaisedButton(
-                      padding: EdgeInsets.only(left: 7, right: 7),
-                      color: Colors.grey[300],
-                      textColor: Colors.grey[700],
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Text(
-                        '1',
-                        style: TextStyle(
-                            fontSize: 22.0, fontWeight: FontWeight.w500),
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                ),
-                SizedBox(width: 15),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //Fact #1
-                      Container(
-                        margin: EdgeInsets.only(right: 20),
-                        child: Text(
-                          'Presiden Joe Biden: What you need to know Coronavirus: White House must go further on new pandemic response, say former Biden advisers, outside expers Fact checker: The false and misleading claims Biden made during his first 100 days in office The Biden cabiner: Who has been selected Biden appointess: Who is filling key roles',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 18),
-                        ),
-                      ),
-                      SizedBox(height: 5),
 
-                      //Source hyperlink #1
-                      Container(
-                        child: Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: TextButton.icon(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.logout,
-                              color: Colors.orange,
-                            ),
-                            label: Text(
-                              "Washington Post",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 48),
-                  child: ButtonTheme(
-                    minWidth: 0,
-                    height: 9.0,
-                    child: RaisedButton(
-                      padding: EdgeInsets.only(left: 7, right: 7),
-                      color: Colors.grey[300],
-                      textColor: Colors.grey[700],
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Text(
-                        '2',
-                        style: TextStyle(
-                            fontSize: 22.0, // insert your font size here
-                            fontWeight: FontWeight.w500),
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                ),
-                SizedBox(width: 15),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //Fact #2
-                      Container(
-                        margin: EdgeInsets.only(right: 20),
-                        child: Text(
-                          'Joe Biden gets upset when you gquote Joe Biden to Joe Biden, "Bongino said, adding that it may indeed be the time to consider replacing Biden in the line of sucession -- while also contemplating the competency of the next-in-line, Vice Presiden Kamala Harris',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 18),
-                        ),
-                      ),
-                      SizedBox(height: 5),
-
-                      //Source #2
-                      Container(
-                        child: Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: TextButton.icon(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.logout,
-                              color: Colors.orange,
-                            ),
-                            label: Text(
-                              "Charles creitz",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            for (var i = 0; i < factsList.length; i++) ...[
+            for (var i = 0; i < topicData['Facts'].length; i++) ...[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -693,7 +594,7 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           margin: EdgeInsets.only(right: 20),
                           child: Text(
-                            factsList[i][0],
+                            topicData["Facts"][i]["Quote"]["Text"],
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 18),
                           ),
@@ -711,7 +612,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.orange,
                               ),
                               label: Text(
-                                factsList[i][1],
+                                topicData["Facts"][i]["Quote"]["Author"],
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -861,5 +762,30 @@ class _HomePageState extends State<HomePage> {
   incrementFactCounter() {
     factCounter += 1;
     setState(() {});
+  }
+
+  getTopicPage(String text) async {
+    var response = await http.post(
+        Uri.parse(
+            "http://infra.eba-ydmy6xs3.us-west-2.elasticbeanstalk.com/getTopicPage/?Content-Type=application/json&Accept=application/json, text/plain, /"),
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json"
+        },
+        body: jsonEncode({
+          "text": text,
+        }));
+
+    var resultingString =
+        response.body.substring(18, response.body.length - 19);
+
+    String raw = resultingString.replaceAll(r'\\\"', "'");
+    String resulting = raw.replaceAll(r'\"', '"');
+
+    topicData = jsonDecode(resulting);
+    print(topicData['Facts'].length);
+    print(topicData['Facts'][0]);
+    print(topicData["Facts"][0]["Quote"]["Text"]);
+    //print(resultingString);
   }
 }
