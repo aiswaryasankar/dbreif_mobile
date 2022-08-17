@@ -22,6 +22,12 @@ import 'package:flutter_application_1/googleSignInPage.dart';
 var user = new Map();
 var topicData = new Map();
 var ans;
+var TimelineDict = new Map();
+var newTimelineDict = new Map();
+var finalTimelineDict = new Map();
+var TimelineDictAuthor = new Map();
+var newTimelineDictAuthor = new Map();
+var finalTimelineDictAuthor = new Map();
 
 Future<void> setData(String email, String name, String AuthCode) async {
   final SharedPreferences gPref = await SharedPreferences.getInstance();
@@ -675,5 +681,4 @@ getTopicPage(String text) async {
   print(topicData['Facts'].length);
   print(topicData['Facts'][0]);
   print(topicData["Facts"][0]["Quote"]["Text"]);
-  //print(resultingString);
 }

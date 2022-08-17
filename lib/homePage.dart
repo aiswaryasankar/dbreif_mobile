@@ -62,6 +62,8 @@ class _HomePageState extends State<HomePage> {
     ]
   ];
 
+  var timeLineDates = [];
+
   int factCounter = 0;
   @override
   void initState() {
@@ -725,8 +727,117 @@ class _HomePageState extends State<HomePage> {
                             SizedBox(height: 20),
                           ]))))
             ],
-
+            Container(
+              child: Text('Break'),
+            ),
             SizedBox(height: 20),
+            for (var i = 0; i < finalTimelineDict.length; i++) ...[
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                      margin: EdgeInsets.only(left: 70),
+                      child: Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Column(children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  finalTimelineDict.keys
+                                      .elementAt(i)
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontSize: 23,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            for (var j = 0;
+                                j <
+                                    finalTimelineDict[
+                                            finalTimelineDict.keys.elementAt(i)]
+                                        .length;
+                                j++) ...[
+                              Row(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      // margin: EdgeInsets.only(left: 20, right: 20),
+                                      child: ButtonTheme(
+                                        minWidth: 40.0,
+                                        height: 40.0,
+                                        child: RaisedButton(
+                                          color: Colors.orange[700],
+                                          //disabledColor: Colors.orange[700],
+                                          textColor: Colors.white,
+                                          //disabledTextColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Text(
+                                            (j + 1).toString(),
+                                            style: TextStyle(
+                                                fontSize:
+                                                    20.0, // insert your font size here
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width /
+                                            2 +
+                                        MediaQuery.of(context).size.width / 10,
+                                    decoration: new BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color:
+                                            Color.fromARGB(255, 239, 238, 238)),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                            margin: EdgeInsets.only(
+                                                top: 10, left: 20, right: 20),
+                                            child: Text(
+                                              finalTimelineDict[
+                                                      finalTimelineDict.keys
+                                                          .elementAt(i)]
+                                                  .join(',')
+                                                  .toString(),
+                                              overflow: TextOverflow.clip,
+                                            )),
+                                        SizedBox(height: 10),
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Container(
+                                            margin: EdgeInsets.only(left: 20),
+                                            child: Text(
+                                              finalTimelineDictAuthor[
+                                                      finalTimelineDictAuthor
+                                                          .keys
+                                                          .elementAt(i)][j]
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  color: Colors.orange,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 20),
+                            ],
+                            SizedBox(height: 20),
+                          ]))))
+            ],
           ],
         ),
       ),
@@ -783,9 +894,188 @@ class _HomePageState extends State<HomePage> {
     String resulting = raw.replaceAll(r'\"', '"');
 
     topicData = jsonDecode(resulting);
-    print(topicData['Facts'].length);
-    print(topicData['Facts'][0]);
-    print(topicData["Facts"][0]["Quote"]["Text"]);
+    // print(topicData['Facts'].length);
+    // print(topicData['Facts'][0]);
+    // print(topicData["Facts"][0]["Quote"]["Text"]);
     //print(resultingString);
+
+    for (var i = 0; i < topicData["Opinions"].length; i++) {
+      if (timeLineDates
+          .contains(topicData["Opinions"][i]["Quote"]["Timestamp"])) {
+        continue;
+      } else {
+        timeLineDates.add(topicData["Opinions"][i]["Quote"]["Timestamp"]);
+      }
+    }
+    // print("Break");
+    // print(timeLineDates);
+
+    for (var i = 0; i < timeLineDates.length; i++) {
+      var splitted = timeLineDates[i].split(" ");
+
+      timeLineDates[i] = splitted[0];
+    }
+    print(timeLineDates);
+    print("Second Break");
+    TimelineDict.clear();
+    newTimelineDict.clear();
+    finalTimelineDict.clear();
+    TimelineDictAuthor.clear();
+    newTimelineDictAuthor.clear();
+    finalTimelineDictAuthor.clear();
+
+    for (var i = 0; i < topicData["Opinions"].length; i++) {
+      var dummy = TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]];
+
+      dummy == null
+          ? TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]] = [
+              topicData["Opinions"][i]["Quote"]["Text"]
+            ]
+          : {
+              dummy.add(topicData["Opinions"][i]["Quote"]["Text"]),
+              TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]] =
+                  dummy
+            };
+    }
+    //author
+    for (var i = 0; i < topicData["Opinions"].length; i++) {
+      var dummy =
+          TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]];
+
+      dummy == null
+          ? TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]] =
+              [topicData["Opinions"][i]["Quote"]["Author"]]
+          : {
+              dummy.add(topicData["Opinions"][i]["Quote"]["Author"]),
+              TimelineDictAuthor[topicData["Opinions"][i]["Quote"]
+                  ["Timestamp"]] = dummy
+            };
+    }
+
+    // print(TimelineDict);
+    // print("third break");
+
+    for (var i = 0; i < TimelineDict.length; i++) {
+      var dummy = TimelineDict.keys.elementAt(i);
+      var split = dummy.split(" ");
+      //print("Sepelit");
+      //print(split[0]);
+      var subString = split[0].substring(5);
+      //print(subString);
+      newTimelineDict[subString] = TimelineDict[dummy];
+    }
+    //author
+    for (var i = 0; i < TimelineDictAuthor.length; i++) {
+      var dummy = TimelineDictAuthor.keys.elementAt(i);
+      var split = dummy.split(" ");
+      // print("Sepelit");
+      // print(split[0]);
+      var subString = split[0].substring(5);
+      //print(subString);
+      newTimelineDictAuthor[subString] = TimelineDictAuthor[dummy];
+    }
+
+    // print("Fourth break");
+    // print(newTimelineDict);
+    var testIndex = newTimelineDict.keys.elementAt(0);
+    //print(newTimelineDict[testIndex]);
+
+    for (var i = 0; i < newTimelineDict.length; i++) {
+      var firstString;
+      var secondString;
+      var dummy = newTimelineDict.keys.elementAt(i);
+      var split = dummy.split("-");
+      // print("kedua");
+      // print(split);
+      if (split[0] == '01') {
+        firstString = "January";
+      }
+      if (split[0] == '02') {
+        firstString = "February";
+      }
+      if (split[0] == '03') {
+        firstString = "March";
+      }
+      if (split[0] == '04') {
+        firstString = "April";
+      }
+      if (split[0] == '05') {
+        firstString = "May";
+      }
+      if (split[0] == '06') {
+        firstString = "June";
+      }
+      if (split[0] == '07') {
+        firstString = "July";
+      }
+      if (split[0] == '08') {
+        firstString = "August";
+      }
+      if (split[0] == '09') {
+        firstString = "September";
+      }
+      if (split[0] == '10') {
+        firstString = "October";
+      }
+      if (split[0] == '11') {
+        firstString = "November";
+      }
+      if (split[0] == '12') {
+        firstString = "December";
+      }
+
+      var resultingString = firstString + " " + split[1];
+      finalTimelineDict[resultingString] = newTimelineDict[dummy];
+    }
+    //author
+    for (var i = 0; i < newTimelineDictAuthor.length; i++) {
+      var firstString;
+      var secondString;
+      var dummy = newTimelineDictAuthor.keys.elementAt(i);
+      var split = dummy.split("-");
+      // print("kedua");
+      // print(split);
+      if (split[0] == '01') {
+        firstString = "January";
+      }
+      if (split[0] == '02') {
+        firstString = "February";
+      }
+      if (split[0] == '03') {
+        firstString = "March";
+      }
+      if (split[0] == '04') {
+        firstString = "April";
+      }
+      if (split[0] == '05') {
+        firstString = "May";
+      }
+      if (split[0] == '06') {
+        firstString = "June";
+      }
+      if (split[0] == '07') {
+        firstString = "July";
+      }
+      if (split[0] == '08') {
+        firstString = "August";
+      }
+      if (split[0] == '09') {
+        firstString = "September";
+      }
+      if (split[0] == '10') {
+        firstString = "October";
+      }
+      if (split[0] == '11') {
+        firstString = "November";
+      }
+      if (split[0] == '12') {
+        firstString = "December";
+      }
+
+      var resultingString = firstString + " " + split[1];
+      finalTimelineDictAuthor[resultingString] = newTimelineDictAuthor[dummy];
+    }
+    //print(finalTimelineDict.length);
+    print(finalTimelineDictAuthor);
   }
 }
