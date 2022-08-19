@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:convert' show utf8;
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -631,102 +632,6 @@ class _HomePageState extends State<HomePage> {
             ],
             SizedBox(height: 10),
 
-            for (var i = 0; i < timelineList.length; i++) ...[
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                      margin: EdgeInsets.only(left: 70),
-                      child: Directionality(
-                          textDirection: TextDirection.ltr,
-                          child: Column(children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  timelineList[i][0][0].toString(),
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                              ),
-                            ),
-                            for (var j = 0;
-                                j < timelineList[i].length - 1;
-                                j++) ...[
-                              Row(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                      // margin: EdgeInsets.only(left: 20, right: 20),
-                                      child: ButtonTheme(
-                                        minWidth: 40.0,
-                                        height: 40.0,
-                                        child: RaisedButton(
-                                          color: Colors.orange[700],
-                                          //disabledColor: Colors.orange[700],
-                                          textColor: Colors.white,
-                                          //disabledTextColor: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Text(
-                                            (j + 1).toString(),
-                                            style: TextStyle(
-                                                fontSize:
-                                                    20.0, // insert your font size here
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          onPressed: () {},
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 20),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width /
-                                            2 +
-                                        MediaQuery.of(context).size.width / 10,
-                                    decoration: new BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color:
-                                            Color.fromARGB(255, 239, 238, 238)),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            margin: EdgeInsets.only(
-                                                top: 10, left: 20, right: 20),
-                                            child: Text(
-                                              timelineList[i][j + 1][0]
-                                                  .toString(),
-                                              overflow: TextOverflow.clip,
-                                            )),
-                                        SizedBox(height: 10),
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Container(
-                                            margin: EdgeInsets.only(left: 20),
-                                            child: Text(
-                                              timelineList[i][j + 1][1]
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  color: Colors.orange,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 20),
-                            ],
-                            SizedBox(height: 20),
-                          ]))))
-            ],
             Container(
               child: Text('Break'),
             ),
@@ -735,7 +640,7 @@ class _HomePageState extends State<HomePage> {
               Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                      margin: EdgeInsets.only(left: 70),
+                      margin: EdgeInsets.only(left: 50),
                       child: Directionality(
                           textDirection: TextDirection.ltr,
                           child: Column(children: [
@@ -767,9 +672,11 @@ class _HomePageState extends State<HomePage> {
                                     child: Container(
                                       // margin: EdgeInsets.only(left: 20, right: 20),
                                       child: ButtonTheme(
-                                        minWidth: 40.0,
-                                        height: 40.0,
+                                        minWidth: 30.0,
+                                        height: 30.0,
                                         child: RaisedButton(
+                                          padding: EdgeInsets.only(
+                                              left: 5, right: 5),
                                           color: Colors.orange[700],
                                           //disabledColor: Colors.orange[700],
                                           textColor: Colors.white,
@@ -781,7 +688,7 @@ class _HomePageState extends State<HomePage> {
                                             (j + 1).toString(),
                                             style: TextStyle(
                                                 fontSize:
-                                                    20.0, // insert your font size here
+                                                    15.0, // insert your font size here
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           onPressed: () {},
@@ -880,7 +787,7 @@ class _HomePageState extends State<HomePage> {
         Uri.parse(
             "http://infra.eba-ydmy6xs3.us-west-2.elasticbeanstalk.com/getTopicPage/?Content-Type=application/json&Accept=application/json, text/plain, /"),
         headers: {
-          "Content-type": "application/json",
+          "Content-type": "application/json; charset=utf-8",
           "Accept": "application/json"
         },
         body: jsonEncode({
@@ -907,6 +814,7 @@ class _HomePageState extends State<HomePage> {
         timeLineDates.add(topicData["Opinions"][i]["Quote"]["Timestamp"]);
       }
     }
+
     // print("Break");
     // print(timeLineDates);
 
