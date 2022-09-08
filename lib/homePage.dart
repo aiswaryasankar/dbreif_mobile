@@ -8,6 +8,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter_application_1/mainHomePage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -124,6 +125,34 @@ class _HomePageState extends State<HomePage> {
                   setState(() {});
                 }),
             Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 270,
+                height: 47.0,
+                child: RaisedButton(
+                  color: Colors.orange[700],
+                  //disabledColor: Colors.orange[700],
+                  textColor: Colors.white,
+                  //disabledTextColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    'Go to Main Home Page',
+                    style: TextStyle(
+                        fontSize: 16.0, // insert your font size here
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => mainHomePage()));
+                  },
+                ),
+              ),
+            ),
+            Container(
                 child: const Text(
                     "----------------------------------------------------------------------------------------------")),
             Container(
@@ -140,11 +169,31 @@ class _HomePageState extends State<HomePage> {
                   child: Text('getTopicPage'),
 
                   onPressed: () {
-                    getTopicPage('Text');
+                    getTopicPage('Uber');
                   },
                 ),
               ),
             ),
+            Container(
+              child: ButtonTheme(
+                minWidth: 40,
+                height: 40,
+                child: RaisedButton(
+                  padding: EdgeInsets.only(left: 5, right: 5),
+                  color: Colors.grey[300],
+                  textColor: Colors.grey[600],
+                  //Quit Icon/Button
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Text('HYDRATE'),
+
+                  onPressed: () {
+                    hydrateHomePage("1");
+                  },
+                ),
+              ),
+            ),
+
             Container(
               margin: EdgeInsets.only(left: 20, right: 20),
               child: TextField(
@@ -273,7 +322,12 @@ class _HomePageState extends State<HomePage> {
                                       fontWeight: FontWeight.w500,
                                       fontSize: 18),
                                 )
-                              : Text(topicData['MDSSummary']))),
+                              : Text(
+                                  topicData['MDSSummary'],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18),
+                                ))),
                   SizedBox(height: 25),
                   Row(
                     children: [
@@ -564,7 +618,7 @@ class _HomePageState extends State<HomePage> {
             ]),
             SizedBox(height: 15),
 
-            for (var i = 0; i < topicData['Facts'].length; i++) ...[
+            for (var i = 0; i < 5; i++) ...[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -633,117 +687,142 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 10),
 
             Container(
-              child: Text('Break'),
+              child: ButtonTheme(
+                  child: TextButton(
+                child: Text('Sort'),
+                onPressed: sortByDate,
+              )),
             ),
+
             SizedBox(height: 20),
-            for (var i = 0; i < finalTimelineDict.length; i++) ...[
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                      margin: EdgeInsets.only(left: 50),
-                      child: Directionality(
-                          textDirection: TextDirection.ltr,
-                          child: Column(children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  finalTimelineDict.keys
-                                      .elementAt(i)
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                              ),
-                            ),
-                            for (var j = 0;
-                                j <
-                                    finalTimelineDict[
-                                            finalTimelineDict.keys.elementAt(i)]
-                                        .length;
-                                j++) ...[
-                              Row(
-                                children: [
+
+            for (var t = 0; t < temp.length; t++) ...[
+              for (var i = 0; i < finalTimelineDict.length; i++) ...[
+                finalTimelineDict.keys.elementAt(i).toString() == temp[t]
+                    ? Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                            margin: EdgeInsets.only(left: 20),
+                            child: Directionality(
+                                textDirection: TextDirection.ltr,
+                                child: Column(children: [
                                   Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Container(
-                                      // margin: EdgeInsets.only(left: 20, right: 20),
-                                      child: ButtonTheme(
-                                        minWidth: 30.0,
-                                        height: 30.0,
-                                        child: RaisedButton(
-                                          padding: EdgeInsets.only(
-                                              left: 5, right: 5),
-                                          color: Colors.orange[700],
-                                          //disabledColor: Colors.orange[700],
-                                          textColor: Colors.white,
-                                          //disabledTextColor: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Text(
-                                            (j + 1).toString(),
-                                            style: TextStyle(
-                                                fontSize:
-                                                    15.0, // insert your font size here
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          onPressed: () {},
-                                        ),
+                                    child: TextButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        finalTimelineDict.keys
+                                            .elementAt(i)
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontSize: 23,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 20),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width /
-                                            2 +
-                                        MediaQuery.of(context).size.width / 10,
-                                    decoration: new BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color:
-                                            Color.fromARGB(255, 239, 238, 238)),
-                                    child: Column(
+                                  for (var j = 0;
+                                      j <
+                                          finalTimelineDict[finalTimelineDict
+                                                  .keys
+                                                  .elementAt(i)]
+                                              .length;
+                                      j++) ...[
+                                    Row(
                                       children: [
-                                        Container(
-                                            margin: EdgeInsets.only(
-                                                top: 10, left: 20, right: 20),
-                                            child: Text(
-                                              finalTimelineDict[
-                                                      finalTimelineDict.keys
-                                                          .elementAt(i)]
-                                                  .join(',')
-                                                  .toString(),
-                                              overflow: TextOverflow.clip,
-                                            )),
-                                        SizedBox(height: 10),
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 20),
-                                            child: Text(
-                                              finalTimelineDictAuthor[
-                                                      finalTimelineDictAuthor
-                                                          .keys
-                                                          .elementAt(i)][j]
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  color: Colors.orange,
-                                                  fontWeight: FontWeight.bold),
+                                            // margin: EdgeInsets.only(left: 20, right: 20),
+                                            child: ButtonTheme(
+                                              minWidth: 30.0,
+                                              height: 30.0,
+                                              child: RaisedButton(
+                                                padding: EdgeInsets.only(
+                                                    left: 5, right: 5),
+                                                color: Colors.orange[700],
+                                                //disabledColor: Colors.orange[700],
+                                                textColor: Colors.white,
+                                                //disabledTextColor: Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: Text(
+                                                  (j + 1).toString(),
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          15.0, // insert your font size here
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                onPressed: () {},
+                                              ),
                                             ),
                                           ),
-                                        )
+                                        ),
+                                        SizedBox(width: 20),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2 +
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  5,
+                                          decoration: new BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Color.fromARGB(
+                                                  255, 239, 238, 238)),
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 10,
+                                                      left: 20,
+                                                      right: 20),
+                                                  child: Text(
+                                                    finalTimelineDict[
+                                                            finalTimelineDict
+                                                                .keys
+                                                                .elementAt(i)]
+                                                        .join(',')
+                                                        .toString(),
+                                                    overflow: TextOverflow.clip,
+                                                  )),
+                                              SizedBox(height: 10),
+                                              Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Container(
+                                                  margin:
+                                                      EdgeInsets.only(left: 20),
+                                                  child: Text(
+                                                    finalTimelineDictAuthor[
+                                                            finalTimelineDictAuthor
+                                                                .keys
+                                                                .elementAt(
+                                                                    i)][j]
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        color: Colors.orange,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 20),
-                            ],
-                            SizedBox(height: 20),
-                          ]))))
+                                    SizedBox(height: 20),
+                                  ],
+                                  SizedBox(height: 20),
+                                ]))))
+                    : Container()
+              ],
             ],
           ],
         ),
@@ -799,8 +878,13 @@ class _HomePageState extends State<HomePage> {
 
     String raw = resultingString.replaceAll(r'\\\"', "'");
     String resulting = raw.replaceAll(r'\"', '"');
+    String one = resulting.replaceAll(r'\\u2019', '\u2019');
+    String two = one.replaceAll(r'\\u201c', '\u201c');
+    String three = two.replaceAll(r'\\u201d', '\u201d');
+    String four = three.replaceAll(r'\\u2014', '\u2014');
+    String five = four.replaceAll(r'\\u00e9', '\u00e9');
 
-    topicData = jsonDecode(resulting);
+    topicData = jsonDecode(five);
     // print(topicData['Facts'].length);
     // print(topicData['Facts'][0]);
     // print(topicData["Facts"][0]["Quote"]["Text"]);
@@ -984,6 +1068,268 @@ class _HomePageState extends State<HomePage> {
       finalTimelineDictAuthor[resultingString] = newTimelineDictAuthor[dummy];
     }
     //print(finalTimelineDict.length);
-    print(finalTimelineDictAuthor);
+    print(finalTimelineDict);
+    print('Kumpul');
+  }
+
+  sortByDate() {
+    print(finalTimelineDict);
+    temp = finalTimelineDict.keys.toList();
+    temp.sort();
+    print(temp);
+    for (var i = 0; i < temp.length; i++) {
+      if (temp[i].contains("January")) {
+        temp[i] = "1" + "  " + temp[i];
+      }
+      if (temp[i].contains("Februaru")) {
+        temp[i] = "2" + "  " + temp[i];
+      }
+      if (temp[i].contains("March")) {
+        temp[i] = "3" + "  " + temp[i];
+      }
+      if (temp[i].contains("April")) {
+        temp[i] = "4" + "  " + temp[i];
+      }
+      if (temp[i].contains("May")) {
+        temp[i] = "5" + "  " + temp[i];
+      }
+      if (temp[i].contains("June")) {
+        temp[i] = "6" + "  " + temp[i];
+      }
+      if (temp[i].contains("July")) {
+        temp[i] = "7" + "  " + temp[i];
+      }
+      if (temp[i].contains("August")) {
+        temp[i] = "8" + "  " + temp[i];
+      }
+      if (temp[i].contains("September")) {
+        temp[i] = "9" + "  " + temp[i];
+      }
+      if (temp[i].contains("Octomber")) {
+        temp[i] = "10" + " " + temp[i];
+      }
+      if (temp[i].contains("November")) {
+        temp[i] = "11" + " " + temp[i];
+      }
+      if (temp[i].contains("December")) {
+        temp[i] = "12" + " " + temp[i];
+      }
+    }
+    temp.sort();
+    print(temp);
+
+    for (var i = 0; i < temp.length; i++) {
+      temp[i] = temp[i].substring(3);
+    }
+    print(temp);
+  }
+
+  hydrateHomePage(String text) async {
+    var response = await http.post(
+        Uri.parse(
+            "https://ddbrief.com/hydrateHomePage/?Content-Type=application/json&Accept=application/json, text/plain, /"),
+        headers: {
+          "Content-type": "application/json; charset=utf-8",
+          "Accept": "application/json"
+        },
+        body: jsonEncode({
+          "userId": 1,
+        }));
+
+    var homePageString = response.body.substring(18, response.body.length - 19);
+
+    print(homePageString.runtimeType);
+
+    String raw = homePageString.replaceAll(r'\\\"', "'");
+    String resulting = raw.replaceAll(r'\"', '"');
+    String one = resulting.replaceAll(r'\\u2019', '\u2019');
+    String two = one.replaceAll(r'\\u201c', '\u201c');
+    String three = two.replaceAll(r'\\u201d', '\u201d');
+    String four = three.replaceAll(r'\\u2014', '\u2014');
+    String five = four.replaceAll(r'\\u00e9', '\u00e9');
+    String six = five.replaceAll(r'\\u2013', '\u2013');
+    String seven = six.replaceAll(r"['", '');
+    String eight = seven.replaceAll(r"']", '');
+
+    homePageList = jsonDecode(eight);
+    print(homePageList.runtimeType);
+
+    for (var i = 0; i < topicData["Opinions"].length; i++) {
+      if (timeLineDates
+          .contains(topicData["Opinions"][i]["Quote"]["Timestamp"])) {
+        continue;
+      } else {
+        timeLineDates.add(topicData["Opinions"][i]["Quote"]["Timestamp"]);
+      }
+    }
+    print(homePageList[0]["topic_page"]["Title"]);
+    // print("Break");
+    // print(timeLineDates);
+
+    for (var i = 0; i < timeLineDates.length; i++) {
+      var splitted = timeLineDates[i].split(" ");
+
+      timeLineDates[i] = splitted[0];
+    }
+    print(timeLineDates);
+    print("Second Break");
+    TimelineDict.clear();
+    newTimelineDict.clear();
+    finalTimelineDict.clear();
+    TimelineDictAuthor.clear();
+    newTimelineDictAuthor.clear();
+    finalTimelineDictAuthor.clear();
+
+    for (var i = 0; i < topicData["Opinions"].length; i++) {
+      var dummy = TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]];
+
+      dummy == null
+          ? TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]] = [
+              topicData["Opinions"][i]["Quote"]["Text"]
+            ]
+          : {
+              dummy.add(topicData["Opinions"][i]["Quote"]["Text"]),
+              TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]] =
+                  dummy
+            };
+    }
+    //author
+    for (var i = 0; i < topicData["Opinions"].length; i++) {
+      var dummy =
+          TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]];
+
+      dummy == null
+          ? TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]] =
+              [topicData["Opinions"][i]["Quote"]["Author"]]
+          : {
+              dummy.add(topicData["Opinions"][i]["Quote"]["Author"]),
+              TimelineDictAuthor[topicData["Opinions"][i]["Quote"]
+                  ["Timestamp"]] = dummy
+            };
+    }
+
+    // print(TimelineDict);
+    // print("third break");
+
+    for (var i = 0; i < TimelineDict.length; i++) {
+      var dummy = TimelineDict.keys.elementAt(i);
+      var split = dummy.split(" ");
+      //print("Sepelit");
+      //print(split[0]);
+      var subString = split[0].substring(5);
+      //print(subString);
+      newTimelineDict[subString] = TimelineDict[dummy];
+    }
+    //author
+    for (var i = 0; i < TimelineDictAuthor.length; i++) {
+      var dummy = TimelineDictAuthor.keys.elementAt(i);
+      var split = dummy.split(" ");
+      // print("Sepelit");
+      // print(split[0]);
+      var subString = split[0].substring(5);
+      //print(subString);
+      newTimelineDictAuthor[subString] = TimelineDictAuthor[dummy];
+    }
+
+    // print("Fourth break");
+    // print(newTimelineDict);
+    var testIndex = newTimelineDict.keys.elementAt(0);
+    //print(newTimelineDict[testIndex]);
+
+    for (var i = 0; i < newTimelineDict.length; i++) {
+      var firstString;
+      var secondString;
+      var dummy = newTimelineDict.keys.elementAt(i);
+      var split = dummy.split("-");
+      // print("kedua");
+      // print(split);
+      if (split[0] == '01') {
+        firstString = "January";
+      }
+      if (split[0] == '02') {
+        firstString = "February";
+      }
+      if (split[0] == '03') {
+        firstString = "March";
+      }
+      if (split[0] == '04') {
+        firstString = "April";
+      }
+      if (split[0] == '05') {
+        firstString = "May";
+      }
+      if (split[0] == '06') {
+        firstString = "June";
+      }
+      if (split[0] == '07') {
+        firstString = "July";
+      }
+      if (split[0] == '08') {
+        firstString = "August";
+      }
+      if (split[0] == '09') {
+        firstString = "September";
+      }
+      if (split[0] == '10') {
+        firstString = "October";
+      }
+      if (split[0] == '11') {
+        firstString = "November";
+      }
+      if (split[0] == '12') {
+        firstString = "December";
+      }
+
+      var resultingString = firstString + " " + split[1];
+      finalTimelineDict[resultingString] = newTimelineDict[dummy];
+    }
+    //author
+    for (var i = 0; i < newTimelineDictAuthor.length; i++) {
+      var firstString;
+      var secondString;
+      var dummy = newTimelineDictAuthor.keys.elementAt(i);
+      var split = dummy.split("-");
+      // print("kedua");
+      // print(split);
+      if (split[0] == '01') {
+        firstString = "January";
+      }
+      if (split[0] == '02') {
+        firstString = "February";
+      }
+      if (split[0] == '03') {
+        firstString = "March";
+      }
+      if (split[0] == '04') {
+        firstString = "April";
+      }
+      if (split[0] == '05') {
+        firstString = "May";
+      }
+      if (split[0] == '06') {
+        firstString = "June";
+      }
+      if (split[0] == '07') {
+        firstString = "July";
+      }
+      if (split[0] == '08') {
+        firstString = "August";
+      }
+      if (split[0] == '09') {
+        firstString = "September";
+      }
+      if (split[0] == '10') {
+        firstString = "October";
+      }
+      if (split[0] == '11') {
+        firstString = "November";
+      }
+      if (split[0] == '12') {
+        firstString = "December";
+      }
+
+      var resultingString = firstString + " " + split[1];
+      finalTimelineDictAuthor[resultingString] = newTimelineDictAuthor[dummy];
+    }
   }
 }

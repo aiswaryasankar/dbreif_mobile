@@ -28,6 +28,8 @@ var finalTimelineDict = new Map();
 var TimelineDictAuthor = new Map();
 var newTimelineDictAuthor = new Map();
 var finalTimelineDictAuthor = new Map();
+var temp;
+var timeLineDates = [];
 
 Future<void> setData(String email, String name, String AuthCode) async {
   final SharedPreferences gPref = await SharedPreferences.getInstance();
@@ -151,10 +153,22 @@ class MyApp extends StatelessWidget {
       );
 }
 
-class FirstPage extends StatelessWidget {
+class FirstPage extends StatefulWidget {
   const FirstPage({Key? key, required this.title}) : super(key: key);
   final String title;
+
+  @override
+  State<FirstPage> createState() => _FirstPageState();
+}
+
+class _FirstPageState extends State<FirstPage> {
   final bool isLoggedIn = false;
+
+  void initState() {
+    getTopicPage("uber");
+    sortByDate();
+    print(3);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -665,7 +679,7 @@ getTopicPage(String text) async {
       Uri.parse(
           "http://infra.eba-ydmy6xs3.us-west-2.elasticbeanstalk.com/getTopicPage/?Content-Type=application/json&Accept=application/json, text/plain, /"),
       headers: {
-        "Content-type": "application/json",
+        "Content-type": "application/json; charset=utf-8",
         "Accept": "application/json"
       },
       body: jsonEncode({
@@ -676,9 +690,248 @@ getTopicPage(String text) async {
 
   String raw = resultingString.replaceAll(r'\\\"', "'");
   String resulting = raw.replaceAll(r'\"', '"');
+  String one = resulting.replaceAll(r'\\u2019', '\u2019');
+  String two = one.replaceAll(r'\\u201c', '\u201c');
+  String three = two.replaceAll(r'\\u201d', '\u201d');
+  String four = three.replaceAll(r'\\u2014', '\u2014');
+  String five = four.replaceAll(r'\\u00e9', '\u00e9');
 
-  topicData = jsonDecode(resulting);
-  print(topicData['Facts'].length);
-  print(topicData['Facts'][0]);
-  print(topicData["Facts"][0]["Quote"]["Text"]);
+  topicData = jsonDecode(five);
+  // print(topicData['Facts'].length);
+  // print(topicData['Facts'][0]);
+  // print(topicData["Facts"][0]["Quote"]["Text"]);
+  //print(resultingString);
+
+  for (var i = 0; i < topicData["Opinions"].length; i++) {
+    if (timeLineDates
+        .contains(topicData["Opinions"][i]["Quote"]["Timestamp"])) {
+      continue;
+    } else {
+      timeLineDates.add(topicData["Opinions"][i]["Quote"]["Timestamp"]);
+    }
+  }
+
+  // print("Break");
+  // print(timeLineDates);
+
+  for (var i = 0; i < timeLineDates.length; i++) {
+    var splitted = timeLineDates[i].split(" ");
+
+    timeLineDates[i] = splitted[0];
+  }
+  print(timeLineDates);
+  print("Second Break");
+  TimelineDict.clear();
+  newTimelineDict.clear();
+  finalTimelineDict.clear();
+  TimelineDictAuthor.clear();
+  newTimelineDictAuthor.clear();
+  finalTimelineDictAuthor.clear();
+
+  for (var i = 0; i < topicData["Opinions"].length; i++) {
+    var dummy = TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]];
+
+    dummy == null
+        ? TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]] = [
+            topicData["Opinions"][i]["Quote"]["Text"]
+          ]
+        : {
+            dummy.add(topicData["Opinions"][i]["Quote"]["Text"]),
+            TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]] = dummy
+          };
+  }
+  //author
+  for (var i = 0; i < topicData["Opinions"].length; i++) {
+    var dummy =
+        TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]];
+
+    dummy == null
+        ? TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]] = [
+            topicData["Opinions"][i]["Quote"]["Author"]
+          ]
+        : {
+            dummy.add(topicData["Opinions"][i]["Quote"]["Author"]),
+            TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]] =
+                dummy
+          };
+  }
+
+  // print(TimelineDict);
+  // print("third break");
+
+  for (var i = 0; i < TimelineDict.length; i++) {
+    var dummy = TimelineDict.keys.elementAt(i);
+    var split = dummy.split(" ");
+    //print("Sepelit");
+    //print(split[0]);
+    var subString = split[0].substring(5);
+    //print(subString);
+    newTimelineDict[subString] = TimelineDict[dummy];
+  }
+  //author
+  for (var i = 0; i < TimelineDictAuthor.length; i++) {
+    var dummy = TimelineDictAuthor.keys.elementAt(i);
+    var split = dummy.split(" ");
+    // print("Sepelit");
+    // print(split[0]);
+    var subString = split[0].substring(5);
+    //print(subString);
+    newTimelineDictAuthor[subString] = TimelineDictAuthor[dummy];
+  }
+
+  // print("Fourth break");
+  // print(newTimelineDict);
+  var testIndex = newTimelineDict.keys.elementAt(0);
+  //print(newTimelineDict[testIndex]);
+
+  for (var i = 0; i < newTimelineDict.length; i++) {
+    var firstString;
+    var secondString;
+    var dummy = newTimelineDict.keys.elementAt(i);
+    var split = dummy.split("-");
+    // print("kedua");
+    // print(split);
+    if (split[0] == '01') {
+      firstString = "January";
+    }
+    if (split[0] == '02') {
+      firstString = "February";
+    }
+    if (split[0] == '03') {
+      firstString = "March";
+    }
+    if (split[0] == '04') {
+      firstString = "April";
+    }
+    if (split[0] == '05') {
+      firstString = "May";
+    }
+    if (split[0] == '06') {
+      firstString = "June";
+    }
+    if (split[0] == '07') {
+      firstString = "July";
+    }
+    if (split[0] == '08') {
+      firstString = "August";
+    }
+    if (split[0] == '09') {
+      firstString = "September";
+    }
+    if (split[0] == '10') {
+      firstString = "October";
+    }
+    if (split[0] == '11') {
+      firstString = "November";
+    }
+    if (split[0] == '12') {
+      firstString = "December";
+    }
+
+    var resultingString = firstString + " " + split[1];
+    finalTimelineDict[resultingString] = newTimelineDict[dummy];
+  }
+  //author
+  for (var i = 0; i < newTimelineDictAuthor.length; i++) {
+    var firstString;
+    var secondString;
+    var dummy = newTimelineDictAuthor.keys.elementAt(i);
+    var split = dummy.split("-");
+    // print("kedua");
+    // print(split);
+    if (split[0] == '01') {
+      firstString = "January";
+    }
+    if (split[0] == '02') {
+      firstString = "February";
+    }
+    if (split[0] == '03') {
+      firstString = "March";
+    }
+    if (split[0] == '04') {
+      firstString = "April";
+    }
+    if (split[0] == '05') {
+      firstString = "May";
+    }
+    if (split[0] == '06') {
+      firstString = "June";
+    }
+    if (split[0] == '07') {
+      firstString = "July";
+    }
+    if (split[0] == '08') {
+      firstString = "August";
+    }
+    if (split[0] == '09') {
+      firstString = "September";
+    }
+    if (split[0] == '10') {
+      firstString = "October";
+    }
+    if (split[0] == '11') {
+      firstString = "November";
+    }
+    if (split[0] == '12') {
+      firstString = "December";
+    }
+
+    var resultingString = firstString + " " + split[1];
+    finalTimelineDictAuthor[resultingString] = newTimelineDictAuthor[dummy];
+  }
+  //print(finalTimelineDict.length);
+  print(finalTimelineDict);
+  print('Kumpul');
+}
+
+sortByDate() {
+  print(finalTimelineDict);
+  temp = finalTimelineDict.keys.toList();
+  temp.sort();
+  print(temp);
+  for (var i = 0; i < temp.length; i++) {
+    if (temp[i].contains("January")) {
+      temp[i] = "1" + "  " + temp[i];
+    }
+    if (temp[i].contains("Februaru")) {
+      temp[i] = "2" + "  " + temp[i];
+    }
+    if (temp[i].contains("March")) {
+      temp[i] = "3" + "  " + temp[i];
+    }
+    if (temp[i].contains("April")) {
+      temp[i] = "4" + "  " + temp[i];
+    }
+    if (temp[i].contains("May")) {
+      temp[i] = "5" + "  " + temp[i];
+    }
+    if (temp[i].contains("June")) {
+      temp[i] = "6" + "  " + temp[i];
+    }
+    if (temp[i].contains("July")) {
+      temp[i] = "7" + "  " + temp[i];
+    }
+    if (temp[i].contains("August")) {
+      temp[i] = "8" + "  " + temp[i];
+    }
+    if (temp[i].contains("September")) {
+      temp[i] = "9" + "  " + temp[i];
+    }
+    if (temp[i].contains("Octomber")) {
+      temp[i] = "10" + " " + temp[i];
+    }
+    if (temp[i].contains("November")) {
+      temp[i] = "11" + " " + temp[i];
+    }
+    if (temp[i].contains("December")) {
+      temp[i] = "12" + " " + temp[i];
+    }
+  }
+  temp.sort();
+  print(temp);
+
+  for (var i = 0; i < temp.length; i++) {
+    temp[i] = temp[i].substring(3);
+  }
+  print(temp);
 }
