@@ -17,6 +17,7 @@ import 'package:flutter_application_1/loginPage.dart';
 import 'package:flutter_application_1/registerPage.dart';
 import 'package:flutter_application_1/homePage.dart';
 import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/mainHomePage.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   @override
@@ -80,7 +81,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? HomePage()
+      ? mainHomePage()
       : Scaffold(
           appBar: AppBar(
             title: Text('Verify Email'),

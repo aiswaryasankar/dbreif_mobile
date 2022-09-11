@@ -18,6 +18,7 @@ import 'package:flutter_application_1/loginPage.dart';
 import 'package:flutter_application_1/registerPage.dart';
 import 'package:flutter_application_1/homePage.dart';
 import 'package:flutter_application_1/googleSignInPage.dart';
+import 'package:flutter_application_1/mainHomePage.dart';
 
 var user = new Map();
 var topicData = new Map();
@@ -166,7 +167,9 @@ class _FirstPageState extends State<FirstPage> {
 
   void initState() {
     getTopicPage("uber");
+    hydrateHomePage('1');
     sortByDate();
+    setState(() {});
     print(3);
   }
 
@@ -177,6 +180,61 @@ class _FirstPageState extends State<FirstPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 100),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 270,
+                height: 47.0,
+                child: RaisedButton(
+                  color: Colors.orange[700],
+                  //disabledColor: Colors.orange[700],
+                  textColor: Colors.white,
+                  //disabledTextColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    'HYDRATE',
+                    style: TextStyle(
+                        fontSize: 16.0, // insert your font size here
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                  onPressed: () {
+                    hydrateHomePage('1');
+                  },
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 270,
+                height: 47.0,
+                child: RaisedButton(
+                  color: Colors.orange[700],
+                  //disabledColor: Colors.orange[700],
+                  textColor: Colors.white,
+                  //disabledTextColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    'Go to Main Home Page',
+                    style: TextStyle(
+                        fontSize: 16.0, // insert your font size here
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                  onPressed: () {
+                    hydrateHomePage('1');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => mainHomePage()));
+                  },
+                ),
+              ),
+            ),
             SizedBox(height: 60),
             Container(
                 width: 250,
@@ -702,6 +760,7 @@ getTopicPage(String text) async {
   // print(topicData["Facts"][0]["Quote"]["Text"]);
   //print(resultingString);
 
+  print("TOPICDATA DICOBA");
   for (var i = 0; i < topicData["Opinions"].length; i++) {
     if (timeLineDates
         .contains(topicData["Opinions"][i]["Quote"]["Timestamp"])) {
@@ -711,6 +770,275 @@ getTopicPage(String text) async {
     }
   }
 
+  // print("Break");
+  // print(timeLineDates);
+  print("TIMELINEDATES DICOBA");
+  for (var i = 0; i < timeLineDates.length; i++) {
+    var splitted = timeLineDates[i].split(" ");
+
+    timeLineDates[i] = splitted[0];
+  }
+  print(timeLineDates);
+  print("Second Break");
+  TimelineDict.clear();
+  newTimelineDict.clear();
+  finalTimelineDict.clear();
+  TimelineDictAuthor.clear();
+  newTimelineDictAuthor.clear();
+  finalTimelineDictAuthor.clear();
+
+  for (var i = 0; i < topicData["Opinions"].length; i++) {
+    var dummy = TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]];
+
+    dummy == null
+        ? TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]] = [
+            topicData["Opinions"][i]["Quote"]["Text"]
+          ]
+        : {
+            dummy.add(topicData["Opinions"][i]["Quote"]["Text"]),
+            TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]] = dummy
+          };
+  }
+  //author
+  for (var i = 0; i < topicData["Opinions"].length; i++) {
+    var dummy =
+        TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]];
+
+    dummy == null
+        ? TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]] = [
+            topicData["Opinions"][i]["Quote"]["Author"]
+          ]
+        : {
+            dummy.add(topicData["Opinions"][i]["Quote"]["Author"]),
+            TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]] =
+                dummy
+          };
+  }
+
+  // print(TimelineDict);
+  // print("third break");
+  print("TIMELINEDICT DICOBA");
+  for (var i = 0; i < TimelineDict.length; i++) {
+    var dummy = TimelineDict.keys.elementAt(i);
+    var split = dummy.split(" ");
+    //print("Sepelit");
+    //print(split[0]);
+    var subString = split[0].substring(5);
+    //print(subString);
+    newTimelineDict[subString] = TimelineDict[dummy];
+  }
+  //author
+  print("TIMELINEAUTHOR DICOBA");
+  for (var i = 0; i < TimelineDictAuthor.length; i++) {
+    var dummy = TimelineDictAuthor.keys.elementAt(i);
+    var split = dummy.split(" ");
+    // print("Sepelit");
+    // print(split[0]);
+    var subString = split[0].substring(5);
+    //print(subString);
+    newTimelineDictAuthor[subString] = TimelineDictAuthor[dummy];
+  }
+
+  // print("Fourth break");
+  // print(newTimelineDict);
+  var testIndex = newTimelineDict.keys.elementAt(0);
+  //print(newTimelineDict[testIndex]);
+
+  print("NEWTIMELINEDICT DICOBA");
+  for (var i = 0; i < newTimelineDict.length; i++) {
+    var firstString;
+    var secondString;
+    var dummy = newTimelineDict.keys.elementAt(i);
+    var split = dummy.split("-");
+    // print("kedua");
+    // print(split);
+    if (split[0] == '01') {
+      firstString = "January";
+    }
+    if (split[0] == '02') {
+      firstString = "February";
+    }
+    if (split[0] == '03') {
+      firstString = "March";
+    }
+    if (split[0] == '04') {
+      firstString = "April";
+    }
+    if (split[0] == '05') {
+      firstString = "May";
+    }
+    if (split[0] == '06') {
+      firstString = "June";
+    }
+    if (split[0] == '07') {
+      firstString = "July";
+    }
+    if (split[0] == '08') {
+      firstString = "August";
+    }
+    if (split[0] == '09') {
+      firstString = "September";
+    }
+    if (split[0] == '10') {
+      firstString = "October";
+    }
+    if (split[0] == '11') {
+      firstString = "November";
+    }
+    if (split[0] == '12') {
+      firstString = "December";
+    }
+
+    var resultingString = firstString + " " + split[1];
+    finalTimelineDict[resultingString] = newTimelineDict[dummy];
+  }
+  //author
+  print("NEWTIMELINEDICTAUTHOR DICOBA");
+  for (var i = 0; i < newTimelineDictAuthor.length; i++) {
+    var firstString;
+    var secondString;
+    var dummy = newTimelineDictAuthor.keys.elementAt(i);
+    var split = dummy.split("-");
+    // print("kedua");
+    // print(split);
+    if (split[0] == '01') {
+      firstString = "January";
+    }
+    if (split[0] == '02') {
+      firstString = "February";
+    }
+    if (split[0] == '03') {
+      firstString = "March";
+    }
+    if (split[0] == '04') {
+      firstString = "April";
+    }
+    if (split[0] == '05') {
+      firstString = "May";
+    }
+    if (split[0] == '06') {
+      firstString = "June";
+    }
+    if (split[0] == '07') {
+      firstString = "July";
+    }
+    if (split[0] == '08') {
+      firstString = "August";
+    }
+    if (split[0] == '09') {
+      firstString = "September";
+    }
+    if (split[0] == '10') {
+      firstString = "October";
+    }
+    if (split[0] == '11') {
+      firstString = "November";
+    }
+    if (split[0] == '12') {
+      firstString = "December";
+    }
+
+    var resultingString = firstString + " " + split[1];
+    finalTimelineDictAuthor[resultingString] = newTimelineDictAuthor[dummy];
+  }
+  //print(finalTimelineDict.length);
+  print(finalTimelineDict);
+  print('Kumpul');
+}
+
+sortByDate() {
+  print(finalTimelineDict);
+  temp = finalTimelineDict.keys.toList();
+  temp.sort();
+  print(temp);
+  print("TEMP DICOBA");
+  for (var i = 0; i < temp.length; i++) {
+    if (temp[i].contains("January")) {
+      temp[i] = "1" + "  " + temp[i];
+    }
+    if (temp[i].contains("Februaru")) {
+      temp[i] = "2" + "  " + temp[i];
+    }
+    if (temp[i].contains("March")) {
+      temp[i] = "3" + "  " + temp[i];
+    }
+    if (temp[i].contains("April")) {
+      temp[i] = "4" + "  " + temp[i];
+    }
+    if (temp[i].contains("May")) {
+      temp[i] = "5" + "  " + temp[i];
+    }
+    if (temp[i].contains("June")) {
+      temp[i] = "6" + "  " + temp[i];
+    }
+    if (temp[i].contains("July")) {
+      temp[i] = "7" + "  " + temp[i];
+    }
+    if (temp[i].contains("August")) {
+      temp[i] = "8" + "  " + temp[i];
+    }
+    if (temp[i].contains("September")) {
+      temp[i] = "9" + "  " + temp[i];
+    }
+    if (temp[i].contains("Octomber")) {
+      temp[i] = "10" + " " + temp[i];
+    }
+    if (temp[i].contains("November")) {
+      temp[i] = "11" + " " + temp[i];
+    }
+    if (temp[i].contains("December")) {
+      temp[i] = "12" + " " + temp[i];
+    }
+  }
+  temp.sort();
+  print(temp);
+
+  for (var i = 0; i < temp.length; i++) {
+    temp[i] = temp[i].substring(3);
+  }
+  print(temp);
+}
+
+hydrateHomePage(String text) async {
+  var response = await http.post(
+      Uri.parse(
+          "https://ddbrief.com/hydrateHomePage/?Content-Type=application/json&Accept=application/json, text/plain, /"),
+      headers: {
+        "Content-type": "application/json; charset=utf-8",
+        "Accept": "application/json"
+      },
+      body: jsonEncode({
+        "userId": 1,
+      }));
+
+  var homePageString = response.body.substring(18, response.body.length - 19);
+
+  print(homePageString.runtimeType);
+
+  String raw = homePageString.replaceAll(r'\\\"', "'");
+  String resulting = raw.replaceAll(r'\"', '"');
+  String one = resulting.replaceAll(r'\\u2019', '\u2019');
+  String two = one.replaceAll(r'\\u201c', '\u201c');
+  String three = two.replaceAll(r'\\u201d', '\u201d');
+  String four = three.replaceAll(r'\\u2014', '\u2014');
+  String five = four.replaceAll(r'\\u00e9', '\u00e9');
+  String six = five.replaceAll(r'\\u2013', '\u2013');
+  String seven = six.replaceAll(r"['", '');
+  String eight = seven.replaceAll(r"']", '');
+
+  homePageList = jsonDecode(eight);
+  print(homePageList.runtimeType);
+
+  for (var i = 0; i < topicData["Opinions"].length; i++) {
+    if (timeLineDates
+        .contains(topicData["Opinions"][i]["Quote"]["Timestamp"])) {
+      continue;
+    } else {
+      timeLineDates.add(topicData["Opinions"][i]["Quote"]["Timestamp"]);
+    }
+  }
+  print(homePageList[0]["topic_page"]["Title"]);
+  print("HOMEPAGE UDA");
   // print("Break");
   // print(timeLineDates);
 
@@ -879,59 +1207,6 @@ getTopicPage(String text) async {
     var resultingString = firstString + " " + split[1];
     finalTimelineDictAuthor[resultingString] = newTimelineDictAuthor[dummy];
   }
-  //print(finalTimelineDict.length);
-  print(finalTimelineDict);
-  print('Kumpul');
-}
-
-sortByDate() {
-  print(finalTimelineDict);
-  temp = finalTimelineDict.keys.toList();
-  temp.sort();
-  print(temp);
-  for (var i = 0; i < temp.length; i++) {
-    if (temp[i].contains("January")) {
-      temp[i] = "1" + "  " + temp[i];
-    }
-    if (temp[i].contains("Februaru")) {
-      temp[i] = "2" + "  " + temp[i];
-    }
-    if (temp[i].contains("March")) {
-      temp[i] = "3" + "  " + temp[i];
-    }
-    if (temp[i].contains("April")) {
-      temp[i] = "4" + "  " + temp[i];
-    }
-    if (temp[i].contains("May")) {
-      temp[i] = "5" + "  " + temp[i];
-    }
-    if (temp[i].contains("June")) {
-      temp[i] = "6" + "  " + temp[i];
-    }
-    if (temp[i].contains("July")) {
-      temp[i] = "7" + "  " + temp[i];
-    }
-    if (temp[i].contains("August")) {
-      temp[i] = "8" + "  " + temp[i];
-    }
-    if (temp[i].contains("September")) {
-      temp[i] = "9" + "  " + temp[i];
-    }
-    if (temp[i].contains("Octomber")) {
-      temp[i] = "10" + " " + temp[i];
-    }
-    if (temp[i].contains("November")) {
-      temp[i] = "11" + " " + temp[i];
-    }
-    if (temp[i].contains("December")) {
-      temp[i] = "12" + " " + temp[i];
-    }
-  }
-  temp.sort();
-  print(temp);
-
-  for (var i = 0; i < temp.length; i++) {
-    temp[i] = temp[i].substring(3);
-  }
-  print(temp);
+  print("ini homepagelist");
+  print(homePageList.length);
 }

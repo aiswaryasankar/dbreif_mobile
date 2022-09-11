@@ -8,6 +8,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter_application_1/homePage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -277,7 +278,8 @@ class _mainHomePageState extends State<mainHomePage> {
                           ),
                           SizedBox(width: 130),
                           Container(
-                            child: Text('28 AUGUST'),
+                            child: Text(
+                                homePageList[i]["topic_page"]["CreatedAt"]),
                           ),
                         ],
                       ),
@@ -326,7 +328,14 @@ class _mainHomePageState extends State<mainHomePage> {
                                   fontWeight: FontWeight.bold),
                             ),
 
-                            onPressed: () {},
+                            onPressed: () {
+                              getTopicPage(
+                                  homePageList[i]["topic_page"]["TopicName"]);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()));
+                            },
                           ),
                         ),
                       ),
