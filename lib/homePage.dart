@@ -169,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text('getTopicPage'),
 
                   onPressed: () {
-                    getTopicPage(1);
+                    getTopicPage("uber");
                   },
                 ),
               ),
@@ -689,7 +689,7 @@ class _HomePageState extends State<HomePage> {
             Container(
               child: ButtonTheme(
                   child: TextButton(
-                child: Text('Sort'),
+                child: Text('See Opinions'),
                 onPressed: sortByDate,
               )),
             ),
@@ -861,7 +861,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  getTopicPage(int text) async {
+  getTopicPage(String text) async {
     var response = await http.post(
         Uri.parse(
             "http://infra.eba-ydmy6xs3.us-west-2.elasticbeanstalk.com/getTopicPage/?Content-Type=application/json&Accept=application/json, text/plain, /"),
@@ -870,7 +870,7 @@ class _HomePageState extends State<HomePage> {
           "Accept": "application/json"
         },
         body: jsonEncode({
-          "articleId": text,
+          "topicName": text,
         }));
 
     var resultingString =

@@ -31,6 +31,7 @@ var newTimelineDictAuthor = new Map();
 var finalTimelineDictAuthor = new Map();
 var temp;
 var timeLineDates = [];
+var mainPageDates = [];
 
 Future<void> setData(String email, String name, String AuthCode) async {
   final SharedPreferences gPref = await SharedPreferences.getInstance();
@@ -166,11 +167,13 @@ class _FirstPageState extends State<FirstPage> {
   final bool isLoggedIn = false;
 
   void initState() {
-    getTopicPage("uber");
+    getTopicPages("uber");
     hydrateHomePage('1');
     sortByDate();
     setState(() {});
     print(3);
+    print(10000);
+    formatMainPageDates();
   }
 
   @override
@@ -202,6 +205,56 @@ class _FirstPageState extends State<FirstPage> {
 
                   onPressed: () {
                     hydrateHomePage('1');
+                  },
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 270,
+                height: 47.0,
+                child: RaisedButton(
+                  color: Colors.orange[700],
+                  //disabledColor: Colors.orange[700],
+                  textColor: Colors.white,
+                  //disabledTextColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    'FORMAT',
+                    style: TextStyle(
+                        fontSize: 16.0, // insert your font size here
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                  onPressed: () {
+                    formatMainPageDates();
+                  },
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: ButtonTheme(
+                minWidth: 270,
+                height: 47.0,
+                child: RaisedButton(
+                  color: Colors.orange[700],
+                  //disabledColor: Colors.orange[700],
+                  textColor: Colors.white,
+                  //disabledTextColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    mainPageDates.length.toString(),
+                    style: TextStyle(
+                        fontSize: 16.0, // insert your font size here
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                  onPressed: () {
+                    getTopicPages("uber");
                   },
                 ),
               ),
@@ -366,7 +419,7 @@ class _FirstPageState extends State<FirstPage> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
-                    getTopicPage('Text');
+                    getTopicPages('Text');
                   },
                 ),
               ),
@@ -732,7 +785,7 @@ class _AuthPageState extends State<AuthPage> {
   void toggle() => setState(() => isLogin = !isLogin);
 }
 
-getTopicPage(String text) async {
+getTopicPages(String text) async {
   var response = await http.post(
       Uri.parse(
           "http://infra.eba-ydmy6xs3.us-west-2.elasticbeanstalk.com/getTopicPage/?Content-Type=application/json&Accept=application/json, text/plain, /"),
@@ -741,11 +794,15 @@ getTopicPage(String text) async {
         "Accept": "application/json"
       },
       body: jsonEncode({
-        "text": text,
+        "text": "California",
       }));
 
+  print("testing");
+  print(response.body);
+  print(response.body.substring(18, response.body.length - 19));
   var resultingString = response.body.substring(18, response.body.length - 19);
 
+  print("break");
   String raw = resultingString.replaceAll(r'\\\"', "'");
   String resulting = raw.replaceAll(r'\"', '"');
   String one = resulting.replaceAll(r'\\u2019', '\u2019');
@@ -755,12 +812,14 @@ getTopicPage(String text) async {
   String five = four.replaceAll(r'\\u00e9', '\u00e9');
 
   topicData = jsonDecode(five);
+  print(topicData);
   // print(topicData['Facts'].length);
   // print(topicData['Facts'][0]);
   // print(topicData["Facts"][0]["Quote"]["Text"]);
   //print(resultingString);
 
   print("TOPICDATA DICOBA");
+  print("DAPET TOPICDATA");
   for (var i = 0; i < topicData["Opinions"].length; i++) {
     if (timeLineDates
         .contains(topicData["Opinions"][i]["Quote"]["Timestamp"])) {
@@ -1209,4 +1268,60 @@ hydrateHomePage(String text) async {
   }
   print("ini homepagelist");
   print(homePageList.length);
+}
+
+formatMainPageDates() async {
+  for (var i = 0; i < homePageList.length; i++) {
+    var dummy = homePageList[i]["topic_page"]["CreatedAt"];
+    var split = dummy.split(" ");
+    print(homePageList[i]["topic_page"]["CreatedAt"]);
+
+    var split1 = split[0];
+    var split2 = split1.split("-");
+    var firstString;
+
+    if (split2[2] == '01') {
+      firstString = "January";
+    }
+    if (split2[2] == '02') {
+      firstString = "February";
+    }
+    if (split2[2] == '03') {
+      firstString = "March";
+    }
+    if (split2[2] == '04') {
+      firstString = "April";
+    }
+    if (split2[2] == '05') {
+      firstString = "May";
+    }
+    if (split2[2] == '06') {
+      firstString = "June";
+    }
+    if (split2[2] == '07') {
+      firstString = "July";
+    }
+    if (split2[2] == '08') {
+      firstString = "August";
+    }
+    if (split2[2] == '09') {
+      firstString = "September";
+    }
+    if (split2[2] == '10') {
+      firstString = "October";
+    }
+    if (split2[2] == '11') {
+      firstString = "November";
+    }
+    if (split2[2] == '12') {
+      firstString = "December";
+    }
+    print("BIS");
+    print(mainPageDates);
+
+    var finalString = split2[1] + " " + firstString;
+    print(finalString);
+    mainPageDates.add(finalString);
+  }
+  print("OKE");
 }

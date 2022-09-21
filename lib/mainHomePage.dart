@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:convert' show utf8;
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_application_1/loginPage.dart';
 import 'package:flutter_application_1/registerPage.dart';
 import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/homePage.dart';
 
 var timeLineDates = [];
 
@@ -246,7 +247,7 @@ class _mainHomePageState extends State<mainHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            for (var i = 0; i < homePageList.length; i++) ...[
+            for (var i = 0; i < mainPageDates.length; i++) ...[
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.only(left: 20, right: 20),
@@ -271,6 +272,7 @@ class _mainHomePageState extends State<mainHomePage> {
                     Container(
                       margin: EdgeInsets.only(left: 20, right: 20),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             child: Text(
@@ -278,8 +280,7 @@ class _mainHomePageState extends State<mainHomePage> {
                           ),
                           SizedBox(width: 130),
                           Container(
-                            child: Text(
-                                homePageList[i]["topic_page"]["CreatedAt"]),
+                            child: Text(mainPageDates[i]),
                           ),
                         ],
                       ),
@@ -330,7 +331,8 @@ class _mainHomePageState extends State<mainHomePage> {
 
                             onPressed: () {
                               getTopicPage(
-                                  homePageList[i]["topic_page"]["TopicName"]);
+                                homePageList[i]["topic_page"]['TopicName'],
+                              );
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -2104,4 +2106,216 @@ class _mainHomePageState extends State<mainHomePage> {
       ),
     );
   }
+}
+
+getTopicPage(String text) async {
+  print(text);
+  var response = await http.post(
+      Uri.parse(
+          "http://infra.eba-ydmy6xs3.us-west-2.elasticbeanstalk.com/getTopicPage/?Content-Type=application/json&Accept=application/json, text/plain, /"),
+      headers: {
+        "Content-type": "application/json; charset=utf-8",
+        "Accept": "application/json"
+      },
+      body: jsonEncode({
+        "topicName": text,
+      }));
+
+  var resultingString = response.body.substring(18, response.body.length - 19);
+
+  String raw = resultingString.replaceAll(r'\\\"', "'");
+  String resulting = raw.replaceAll(r'\"', '"');
+  String one = resulting.replaceAll(r'\\u2019', '\u2019');
+  String two = one.replaceAll(r'\\u201c', '\u201c');
+  String three = two.replaceAll(r'\\u201d', '\u201d');
+  String four = three.replaceAll(r'\\u2014', '\u2014');
+  String five = four.replaceAll(r'\\u00e9', '\u00e9');
+  String six = five.replaceAll(r'\\u2013', '\u2013');
+
+  topicData = jsonDecode(six);
+  // print(topicData['Facts'].length);
+  // print(topicData['Facts'][0]);
+  // print(topicData["Facts"][0]["Quote"]["Text"]);
+  //print(resultingString);
+
+  for (var i = 0; i < topicData["Opinions"].length; i++) {
+    if (timeLineDates
+        .contains(topicData["Opinions"][i]["Quote"]["Timestamp"])) {
+      continue;
+    } else {
+      timeLineDates.add(topicData["Opinions"][i]["Quote"]["Timestamp"]);
+    }
+  }
+
+  // print("Break");
+  // print(timeLineDates);
+
+  for (var i = 0; i < timeLineDates.length; i++) {
+    var splitted = timeLineDates[i].split(" ");
+
+    timeLineDates[i] = splitted[0];
+  }
+  print(timeLineDates);
+  print("Second Break");
+  TimelineDict.clear();
+  newTimelineDict.clear();
+  finalTimelineDict.clear();
+  TimelineDictAuthor.clear();
+  newTimelineDictAuthor.clear();
+  finalTimelineDictAuthor.clear();
+
+  for (var i = 0; i < topicData["Opinions"].length; i++) {
+    var dummy = TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]];
+
+    dummy == null
+        ? TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]] = [
+            topicData["Opinions"][i]["Quote"]["Text"]
+          ]
+        : {
+            dummy.add(topicData["Opinions"][i]["Quote"]["Text"]),
+            TimelineDict[topicData["Opinions"][i]["Quote"]["Timestamp"]] = dummy
+          };
+  }
+  //author
+  for (var i = 0; i < topicData["Opinions"].length; i++) {
+    var dummy =
+        TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]];
+
+    dummy == null
+        ? TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]] = [
+            topicData["Opinions"][i]["Quote"]["Author"]
+          ]
+        : {
+            dummy.add(topicData["Opinions"][i]["Quote"]["Author"]),
+            TimelineDictAuthor[topicData["Opinions"][i]["Quote"]["Timestamp"]] =
+                dummy
+          };
+  }
+
+  // print(TimelineDict);
+  // print("third break");
+
+  for (var i = 0; i < TimelineDict.length; i++) {
+    var dummy = TimelineDict.keys.elementAt(i);
+    var split = dummy.split(" ");
+    //print("Sepelit");
+    //print(split[0]);
+    var subString = split[0].substring(5);
+    //print(subString);
+    newTimelineDict[subString] = TimelineDict[dummy];
+  }
+  //author
+  for (var i = 0; i < TimelineDictAuthor.length; i++) {
+    var dummy = TimelineDictAuthor.keys.elementAt(i);
+    var split = dummy.split(" ");
+    // print("Sepelit");
+    // print(split[0]);
+    var subString = split[0].substring(5);
+    //print(subString);
+    newTimelineDictAuthor[subString] = TimelineDictAuthor[dummy];
+  }
+
+  // print("Fourth break");
+  // print(newTimelineDict);
+  var testIndex = newTimelineDict.keys.elementAt(0);
+  //print(newTimelineDict[testIndex]);
+
+  for (var i = 0; i < newTimelineDict.length; i++) {
+    var firstString;
+    var secondString;
+    var dummy = newTimelineDict.keys.elementAt(i);
+    var split = dummy.split("-");
+    // print("kedua");
+    // print(split);
+    if (split[0] == '01') {
+      firstString = "January";
+    }
+    if (split[0] == '02') {
+      firstString = "February";
+    }
+    if (split[0] == '03') {
+      firstString = "March";
+    }
+    if (split[0] == '04') {
+      firstString = "April";
+    }
+    if (split[0] == '05') {
+      firstString = "May";
+    }
+    if (split[0] == '06') {
+      firstString = "June";
+    }
+    if (split[0] == '07') {
+      firstString = "July";
+    }
+    if (split[0] == '08') {
+      firstString = "August";
+    }
+    if (split[0] == '09') {
+      firstString = "September";
+    }
+    if (split[0] == '10') {
+      firstString = "October";
+    }
+    if (split[0] == '11') {
+      firstString = "November";
+    }
+    if (split[0] == '12') {
+      firstString = "December";
+    }
+
+    var resultingString = firstString + " " + split[1];
+    finalTimelineDict[resultingString] = newTimelineDict[dummy];
+  }
+  //author
+  for (var i = 0; i < newTimelineDictAuthor.length; i++) {
+    var firstString;
+    var secondString;
+    var dummy = newTimelineDictAuthor.keys.elementAt(i);
+    var split = dummy.split("-");
+    // print("kedua");
+    // print(split);
+    if (split[0] == '01') {
+      firstString = "January";
+    }
+    if (split[0] == '02') {
+      firstString = "February";
+    }
+    if (split[0] == '03') {
+      firstString = "March";
+    }
+    if (split[0] == '04') {
+      firstString = "April";
+    }
+    if (split[0] == '05') {
+      firstString = "May";
+    }
+    if (split[0] == '06') {
+      firstString = "June";
+    }
+    if (split[0] == '07') {
+      firstString = "July";
+    }
+    if (split[0] == '08') {
+      firstString = "August";
+    }
+    if (split[0] == '09') {
+      firstString = "September";
+    }
+    if (split[0] == '10') {
+      firstString = "October";
+    }
+    if (split[0] == '11') {
+      firstString = "November";
+    }
+    if (split[0] == '12') {
+      firstString = "December";
+    }
+
+    var resultingString = firstString + " " + split[1];
+    finalTimelineDictAuthor[resultingString] = newTimelineDictAuthor[dummy];
+  }
+  //print(finalTimelineDict.length);
+  print(finalTimelineDict);
+  print('Kumpul');
 }
