@@ -189,20 +189,13 @@ class _FirstPageState extends State<FirstPage> {
               child: ButtonTheme(
                 minWidth: 270,
                 height: 47.0,
-                child: RaisedButton(
-                  color: Colors.orange[700],
-                  //disabledColor: Colors.orange[700],
-                  textColor: Colors.white,
-                  //disabledTextColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                child: ElevatedButton(
                   child: Text(
                     'HYDRATE',
                     style: TextStyle(
                         fontSize: 16.0, // insert your font size here
                         fontWeight: FontWeight.bold),
                   ),
-
                   onPressed: () {
                     hydrateHomePage('1');
                   },
@@ -214,20 +207,13 @@ class _FirstPageState extends State<FirstPage> {
               child: ButtonTheme(
                 minWidth: 270,
                 height: 47.0,
-                child: RaisedButton(
-                  color: Colors.orange[700],
-                  //disabledColor: Colors.orange[700],
-                  textColor: Colors.white,
-                  //disabledTextColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                child: ElevatedButton(
                   child: Text(
                     'FORMAT',
                     style: TextStyle(
                         fontSize: 16.0, // insert your font size here
                         fontWeight: FontWeight.bold),
                   ),
-
                   onPressed: () {
                     formatMainPageDates();
                   },
@@ -239,20 +225,13 @@ class _FirstPageState extends State<FirstPage> {
               child: ButtonTheme(
                 minWidth: 270,
                 height: 47.0,
-                child: RaisedButton(
-                  color: Colors.orange[700],
-                  //disabledColor: Colors.orange[700],
-                  textColor: Colors.white,
-                  //disabledTextColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                child: ElevatedButton(
                   child: Text(
                     mainPageDates.length.toString(),
                     style: TextStyle(
                         fontSize: 16.0, // insert your font size here
                         fontWeight: FontWeight.bold),
                   ),
-
                   onPressed: () {
                     getTopicPages("uber");
                   },
@@ -264,20 +243,13 @@ class _FirstPageState extends State<FirstPage> {
               child: ButtonTheme(
                 minWidth: 270,
                 height: 47.0,
-                child: RaisedButton(
-                  color: Colors.orange[700],
-                  //disabledColor: Colors.orange[700],
-                  textColor: Colors.white,
-                  //disabledTextColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                child: ElevatedButton(
                   child: Text(
                     'Go to Main Home Page',
                     style: TextStyle(
                         fontSize: 16.0, // insert your font size here
                         fontWeight: FontWeight.bold),
                   ),
-
                   onPressed: () {
                     hydrateHomePage('1');
                     Navigator.push(
@@ -351,20 +323,13 @@ class _FirstPageState extends State<FirstPage> {
               child: ButtonTheme(
                 minWidth: 270,
                 height: 47.0,
-                child: RaisedButton(
-                  color: Colors.orange[700],
-                  //disabledColor: Colors.orange[700],
-                  textColor: Colors.white,
-                  //disabledTextColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                child: ElevatedButton(
                   child: Text(
                     'Login',
                     style: TextStyle(
                         fontSize: 16.0, // insert your font size here
                         fontWeight: FontWeight.bold),
                   ),
-
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -382,11 +347,7 @@ class _FirstPageState extends State<FirstPage> {
               child: ButtonTheme(
                 minWidth: 270,
                 height: 35.0,
-                child: RaisedButton(
-                  textColor: Colors.grey[700],
-                  color: Colors.grey[300],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                child: ElevatedButton(
                   child: Text(
                     'Register',
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -409,11 +370,7 @@ class _FirstPageState extends State<FirstPage> {
               child: ButtonTheme(
                 minWidth: 270,
                 height: 35.0,
-                child: RaisedButton(
-                  textColor: Colors.grey[700],
-                  color: Colors.grey[300],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                child: ElevatedButton(
                   child: Text(
                     'getTopic',
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -485,13 +442,7 @@ class _FirstPageState extends State<FirstPage> {
               child: ButtonTheme(
                 minWidth: 70.0,
                 height: 55.0,
-                child: RaisedButton(
-                  color: Colors.orange[700],
-                  //disabledColor: Colors.orange[700],
-                  textColor: Colors.white,
-                  //disabledTextColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                child: ElevatedButton(
                   child: Text(
                     '1',
                     style: TextStyle(
@@ -546,20 +497,13 @@ class _FirstPageState extends State<FirstPage> {
               child: ButtonTheme(
                 minWidth: 70.0,
                 height: 55.0,
-                child: RaisedButton(
-                  color: Colors.orange[700],
-                  //disabledColor: Colors.orange[700],
-                  textColor: Colors.white,
-                  //disabledTextColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
+                child: ElevatedButton(
                   child: Text(
                     '2',
                     style: TextStyle(
                         fontSize: 40.0, // insert your font size here
                         fontWeight: FontWeight.bold),
                   ),
-
                   onPressed: () {},
                 ),
               ),
@@ -621,20 +565,13 @@ class _FirstPageState extends State<FirstPage> {
                   child: ButtonTheme(
                     minWidth: 70.0,
                     height: 55.0,
-                    child: RaisedButton(
-                      color: Colors.orange[700],
-                      //disabledColor: Colors.orange[700],
-                      textColor: Colors.white,
-                      //disabledTextColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                    child: ElevatedButton(
                       child: Text(
                         '3',
                         style: TextStyle(
                             fontSize: 40.0, // insert your font size here
                             fontWeight: FontWeight.bold),
                       ),
-
                       onPressed: () {},
                     ),
                   ),
@@ -708,20 +645,13 @@ class _FirstPageState extends State<FirstPage> {
                   child: ButtonTheme(
                     minWidth: 270,
                     height: 47.0,
-                    child: RaisedButton(
-                      color: Colors.orange[700],
-                      //disabledColor: Colors.orange[700],
-                      textColor: Colors.white,
-                      //disabledTextColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                    child: ElevatedButton(
                       child: Text(
                         'Get Started',
                         style: TextStyle(
                             fontSize: 16.0, // insert your font size here
                             fontWeight: FontWeight.bold),
                       ),
-
                       onPressed: () {
                         var user =
                             FirebaseAuth.instance.currentUser?.emailVerified;
